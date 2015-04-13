@@ -1,0 +1,13 @@
+{
+	"esnext": true,
+	"node": true,
+	"strict": false,
+	"curly": true,
+	"latedef": true,
+	"quotmark": false,
+	"supernew": true,
+	"sub": true,
+	"indent": 1,
+	"eqnull": true,
+	"laxbreak": true
+}
