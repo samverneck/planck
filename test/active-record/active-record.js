@@ -49,7 +49,29 @@ describe('active-record', () => {
 			});
 			it('should create chainable method "get"', () => {
 				A.init();
-				A.get(123, 456).get(123).get([123, 456]);
+				A.get({}).get("123").get("123", "456");
+			});
+		});
+		describe('"get" method', () => {
+			var A;
+			beforeEach(function(){
+				A = class A extends ActiveRecord.Base{
+					constructor(){
+						super();
+						this.id = 0;
+						this.name = "foo";
+						this.blocked = false;
+						this.tokens = [];	
+						this.position = {
+							alt: 0,
+							long: 0
+						}
+					}
+				}
+			});
+			it('should be called with string params or array of strings"', () => {
+				A.init();
+				A.get({}).get("123").get("123", "456");
 			});
 		});
 	});
