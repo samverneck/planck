@@ -1,6 +1,7 @@
-const chai = require("chai");
+import chai from "chai";
+import * as ActiveRecord from '../../lib/active-record/active-record.js';
+
 const should = chai.should();
-const ActiveRecord = require('../../lib/active-record/active-record.js');
 
 describe('active-record', () => {
 	it('should have "Base" class', () => {
@@ -45,6 +46,10 @@ describe('active-record', () => {
 				A.init();
 				A.getById(123, 456).getById("asd").getById(false);
 				A.getById(654, 321).getById("qwe").getById(true);
+			});
+			it('should create chainable method "get"', () => {
+				A.init();
+				A.get(123, 456).get(123).get([123, 456]);
 			});
 		});
 	});
