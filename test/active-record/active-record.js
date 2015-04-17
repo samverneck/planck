@@ -14,7 +14,7 @@ describe('active-record', () => {
 		});
 		describe('"init" method', () => {
 			var A;
-			beforeEach(function(){
+			beforeEach(() => {
 				A = class A extends ActiveRecord.Base{
 					constructor(){
 						super();
@@ -44,17 +44,27 @@ describe('active-record', () => {
 			});
 			it('should create chainable access methods', () => {
 				A.init();
-				A.getById(123, 456).getById("asd").getById(false);
-				A.getById(654, 321).getById("qwe").getById(true);
+				A.getById(123, 456).getByName("asd").getByBlocked(false);
+				A.getById(654, 321).getByName("qwe").getByBlocked(true);
 			});
 			it('should create chainable method "get"', () => {
 				A.init();
-				A.get({}).get("123").get("123", "456");
+				A.get.should.be.a('function');
 			});
+		});
+		it('result of any chainable method should be promise', () => {
+			let A = class A extends ActiveRecord.Base{
+				constructor(){
+					super();
+					this.id = 0;
+				}
+			};
+			A.init();
+			A.get('45').getById('45').should.be.instanceOf(Promise);
 		});
 		describe('"get" method', () => {
 			var A;
-			beforeEach(function(){
+			beforeEach(() => {
 				A = class A extends ActiveRecord.Base{
 					constructor(){
 						super();
@@ -69,10 +79,14 @@ describe('active-record', () => {
 					}
 				};
 			});
+			it('should be chainable', () => {
+				A.init();
+				A.get({}).get('123').get('123', '456');
+			});
 			it('should be called with string params', () => {
 				A.init();
-				A.get("123");
-			});
+				A.get(['123']).get('123').get('123', '456');
+			});	
 		});
 	});
 });
