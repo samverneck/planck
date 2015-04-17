@@ -25,9 +25,9 @@ describe('active-record', () => {
 						this.position = {
 							alt: 0,
 							long: 0
-						}
+						};
 					}
-				}
+				};
 			});
 			it('should not be called without subclassing', () => {
 				ActiveRecord.Base.init.bind(ActiveRecord.Base).should.throw(TypeError);
@@ -65,13 +65,13 @@ describe('active-record', () => {
 						this.position = {
 							alt: 0,
 							long: 0
-						}
+						};
 					}
-				}
+				};
 			});
-			it('should be called with string params or array of strings"', () => {
+			it('should be called with string params', () => {
 				A.init();
-				A.get({}).get("123").get("123", "456");
+				A.get("123");
 			});
 		});
 	});
