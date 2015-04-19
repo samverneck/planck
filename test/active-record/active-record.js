@@ -1,5 +1,6 @@
 import chai from "chai";
-import * as ActiveRecord from '../../lib/active-record/active-record.js';
+import * as ActiveRecord from '../../lib/active-record/active-record';
+import '../../lib/errors';
 
 const should = chai.should();
 
@@ -30,9 +31,9 @@ describe('active-record', () => {
 				};
 			});
 			it('should not be called without subclassing', () => {
-				ActiveRecord.Base.init.bind(ActiveRecord.Base).should.throw(TypeError);
-				A.init.bind(ActiveRecord.Base).should.throw(TypeError);
-				A.init.bind(A).should.not.throw(TypeError);
+				ActiveRecord.Base.init.bind(ActiveRecord.Base).should.throw(AbstractClassError);
+				A.init.bind(ActiveRecord.Base).should.throw(AbstractClassError);
+				A.init.bind(A).should.not.throw(AbstractClassError);
 			});
 			it('should create access methods for each atomic field in constructor', () => {
 				A.init();
@@ -50,6 +51,18 @@ describe('active-record', () => {
 			it('should create chainable method "get"', () => {
 				A.init();
 				A.get.should.be.a('function');
+			});
+			it('should have field "database", accesed via setter/getter', () => {
+				A.init();
+				A.database = "mongo";
+			});
+			it('"database" field accessable only in subclass', (done) => {
+				try{
+					ActiveRecord.Base.database = 123;
+					done(new Error());
+				}catch(e){
+					done();
+				}
 			});
 		});
 		it('result of any chainable method should be promise', () => {
@@ -78,13 +91,20 @@ describe('active-record', () => {
 						};
 					}
 				};
-			});
-			it('should be chainable', () => {
 				A.init();
+			});
+			it('should be chainable', async () => {
 				A.get({}).get('123').get('123', '456');
 			});
+			it('should return promise', async (done) => {
+				try{
+					let a = await A.get({}).get('123').get('123', '456');
+					done();
+				}catch(e){
+					done(e);
+				}
+			});
 			it('should be called with string params', () => {
-				A.init();
 				A.get(['123']).get('123').get('123', '456');
 			});	
 		});
