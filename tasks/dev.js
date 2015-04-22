@@ -6,7 +6,7 @@ var plumber = require('gulp-plumber');
 
 var paths = (new function(){
 	this.dest = "build";
-	this.exclude = ["!{node_modules,node_modules/**}", "!{build,build/**}", "!{logs,logs/**}", "!{coverage,coverage/**}", "!{tasks,tasks/**}", "!gulpfile.js"];
+	this.exclude = ["!{node_modules,node_modules/**}", "!{.git,.git/**}","!{build,build/**}", "!{logs,logs/**}", "!{coverage,coverage/**}", "!{tasks,tasks/**}", "!gulpfile.js"];
 	this.js = ["./**/*.js"];
 }());
 
@@ -23,14 +23,24 @@ var buildBabel = function(watching){
 	var insert = require("gulp-insert");
 	var sourcemaps = require("gulp-sourcemaps");
 
-	var src = gulp.src(paths.js.concat(paths.exclude))
+	var src = gulp.src(paths.js.concat(paths.exclude).concat(["!index.js"]))
 		.pipe(plumber());
 	if (watching) {
 		src = src.pipe(watch(paths.js.concat(paths.exclude), {ignoreInitial: true}))
 	}
-	src.pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");'))
-		.pipe(sourcemaps.init())
-		.pipe(babel())
+	src.pipe(sourcemaps.init())
+		.pipe(babel()).pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");'))
+		.on('error', console.error.bind(console))
+		.pipe(sourcemaps.write("."))
+		.pipe(gulp.dest(paths.dest));
+
+	var src = gulp.src(["index.js"])
+		.pipe(plumber());
+	if (watching) {
+		src = src.pipe(watch(["index.js"], {ignoreInitial: true}))
+	}
+	src.pipe(sourcemaps.init())
+		.pipe(babel()).pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");require("./polyfill/system");'))
 		.on('error', console.error.bind(console))
 		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest(paths.dest));

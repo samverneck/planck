@@ -98,7 +98,7 @@ describe('active-record', () => {
 			});
 			it('should return promise', async (done) => {
 				try{
-					let a = await A.get({}).get('123').get('123', '456');
+					await A.get({}).get('123').get('123', '456');
 					done();
 				}catch(e){
 					done(e);

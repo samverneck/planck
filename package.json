@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "babel": "^5.1.4",
+    "es6-module-loader": "^0.16.5",
     "mongodb": "^2.0.27",
     "source-map-support": "^0.2.10"
   }
