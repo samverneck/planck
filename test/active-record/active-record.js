@@ -1,3 +1,5 @@
+import '../../index';
+import App from '../../lib/app';
 import chai from "chai";
 import * as ActiveRecord from '../../lib/active-record/active-record';
 import '../../lib/errors';
@@ -5,6 +7,10 @@ import '../../lib/errors';
 const should = chai.should();
 
 describe('active-record', () => {
+	before(() => {
+		new App('test/mocks/config/main');
+	});
+
 	it('should have "Base" class', () => {
 		ActiveRecord.Base.should.be.a('function');
 	});
@@ -45,8 +51,8 @@ describe('active-record', () => {
 			});
 			it('should create chainable access methods', () => {
 				A.init();
-				A.getById(123, 456).getByName("asd").getByBlocked(false);
-				A.getById(654, 321).getByName("qwe").getByBlocked(true);
+				A.getById(123, 456).getByName("asd").getByBlocked(false).and.should.not.throw(Error);
+				A.getById(654, 321).getByName("qwe").getByBlocked(true).and.should.not.throw(Error);
 			});
 			it('should create chainable method "get"', () => {
 				A.init();
@@ -58,7 +64,7 @@ describe('active-record', () => {
 			});
 			it('"database" field accessable only in subclass', (done) => {
 				try{
-					ActiveRecord.Base.database = 123;
+					ActiveRecord.Base.database = "mongo";
 					done(new Error());
 				}catch(e){
 					done();
@@ -73,7 +79,7 @@ describe('active-record', () => {
 				}
 			};
 			A.init();
-			A.get('45').getById('45').should.be.instanceOf(Promise);
+			A.get('45').getById('45').should.be.instanceOf(Promise).and.should.not.throw(Error);
 		});
 		describe('"get" method', () => {
 			var A;
