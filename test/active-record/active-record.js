@@ -7,8 +7,9 @@ import '../../lib/errors';
 const should = chai.should();
 
 describe('active-record', () => {
-	before(() => {
-		new App('test/mocks/config/main');
+	before(async (done) => {
+		await new App('test/mocks/config/main');
+		done();
 	});
 
 	it('should have "Base" class', () => {
@@ -49,10 +50,15 @@ describe('active-record', () => {
 				should.not.exist(A.getByTokens);
 				should.not.exist(A.getByPosition);
 			});
-			it('should create chainable access methods', () => {
+			it('should create chainable access methods', async (done) => {
 				A.init();
-				A.getById(123, 456).getByName("asd").getByBlocked(false).and.should.not.throw(Error);
-				A.getById(654, 321).getByName("qwe").getByBlocked(true).and.should.not.throw(Error);
+				try{
+					await A.getById(123, 456).getByName("asd").getByBlocked(false);
+					await A.getById(654, 321).getByName("qwe").getByBlocked(true);
+					done();
+				}catch(e){
+					done(e);
+				}
 			});
 			it('should create chainable method "get"', () => {
 				A.init();
@@ -71,7 +77,7 @@ describe('active-record', () => {
 				}
 			});
 		});
-		it('result of any chainable method should be promise', () => {
+		it('result of any chainable method should be promise', async (done) => {
 			let A = class A extends ActiveRecord.Base{
 				constructor(){
 					super();
@@ -79,7 +85,13 @@ describe('active-record', () => {
 				}
 			};
 			A.init();
-			A.get('45').getById('45').should.be.instanceOf(Promise).and.should.not.throw(Error);
+			A.get('45').getById('45').should.be.instanceOf(Promise);
+			try{
+				await A.get('45').getById('45');
+				done();
+			}catch(e){
+				done(e);
+			}
 		});
 		describe('"get" method', () => {
 			var A;
@@ -99,8 +111,13 @@ describe('active-record', () => {
 				};
 				A.init();
 			});
-			it('should be chainable', async () => {
-				A.get({}).get('123').get('123', '456');
+			it('should be chainable', async (done) => {
+				try{
+					await A.get({}).get('123').get('123', '456');
+					done();
+				}catch(e){
+					done(e);
+				}
 			});
 			it('should return promise', async (done) => {
 				try{
@@ -110,8 +127,13 @@ describe('active-record', () => {
 					done(e);
 				}
 			});
-			it('should be called with string params', () => {
-				A.get(['123']).get('123').get('123', '456');
+			it('should be called with string params', async (done) => {
+				try{
+					await A.get(['123']).get('123').get('123', '456');
+					done();
+				}catch(e){
+					done(e);
+				}	
 			});	
 		});
 	});

@@ -22,7 +22,6 @@ describe('app', () => {
 			app.should.be.instanceof(App);
 			should.exist(app.config);
 			app.config.appName.should.be.equal('testApp');
-			console.log(app.dbProviderPool.databases)			
 			app.dbProviderPool.databases = {};
 		});
 		it('should work without constructor params with default path to config', async () => {
