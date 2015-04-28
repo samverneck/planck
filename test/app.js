@@ -11,16 +11,19 @@ describe('app', () => {
 	});
 	describe('"App" class', () => {
 		it('should accept Object as constructor param with entire application params', async () => {
-			const app = await new App({appName: 'testApp'})
+			let config = await System.import('test/mocks/config/main');
+			const app = await new App(config.default)
 			app.should.be.instanceof(App);
 			should.exist(app.config);
 			app.config.appName.should.be.equal('testApp');
+			app.dbProviderPool.databases = {};
 		});
 		it('should accept string as constructor param, string is path to config', async () => {
 			const app = await new App('test/mocks/config/main')
 			app.should.be.instanceof(App);
 			should.exist(app.config);
 			app.config.appName.should.be.equal('testApp');
+			app.dbProviderPool.databases = {};
 		});
 		it('should work without constructor params with default path to config', async () => {
 			let cwd = process.cwd();
@@ -30,6 +33,7 @@ describe('app', () => {
 			app.should.be.instanceof(App);
 			should.exist(app.config);
 			app.config.appName.should.be.equal('testApp');
+			app.dbProviderPool.databases = {};
 		});
 		it('should fail with any other params to constructor', async (done) => {
 			try{
