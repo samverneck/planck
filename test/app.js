@@ -11,7 +11,8 @@ describe('app', () => {
 	});
 	describe('"App" class', () => {
 		it('should accept Object as constructor param with entire application params', async () => {
-			const app = await new App({appName: 'testApp'})
+			let config = await System.import('test/mocks/config/main');
+			const app = await new App(config.default)
 			app.should.be.instanceof(App);
 			should.exist(app.config);
 			app.config.appName.should.be.equal('testApp');
