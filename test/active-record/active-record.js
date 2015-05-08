@@ -3,20 +3,19 @@ import App from '../../lib/app';
 import chai from "chai";
 import * as ActiveRecord from '../../lib/active-record/active-record';
 import * as ActiveRecordDBProvider from '../../lib/active-record/lib/active-record-db-provider/active-record-db-provider';
-import '../../lib/errors';
 
 const should = chai.should();
 
 describe('active-record', () => {
 	let app;
 	before(async (done) => {
-		app = await new App('test/mocks/config/main');
+		app = await new App('build/test/mocks/config/main');
 		done();
 	});
 
 	after(async (done) => {
 		app.dbProviderPool.databases = {};
-		done();
+		app.httpServer.close(() => done());
 	});
 
 	it('should have "Base" class', () => {

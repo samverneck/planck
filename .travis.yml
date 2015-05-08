@@ -4,6 +4,8 @@ node_js:
   - "iojs"
 install:
   - npm i -g gulp
+  - npm install coveralls
   - npm install
   - gulp build
-script: "npm test"
+script: "npm run-script test-ci"
+after_script: "if [[ `node --version` == *v0.12* ]]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js; fi"

@@ -5,17 +5,17 @@ var pathModule = require('path');
 
 global.System = global.System || {
 	import: function(path) {
-		return new Promise(function(resolve,reject){
+		return new Promise(function(resolve, reject){
 			try{
 				if (!pathModule.isAbsolute(path)){
-					path = pathModule.join("..", path);
+					path = pathModule.join(process.cwd(), path);
 				}
 				var _module = require(path);
 				var module = _interopRequireWildcard(_module);
+				resolve(module);
 			}catch(e){
 				reject(e);
 			}
-			resolve(module)
 		})
 	}
 }

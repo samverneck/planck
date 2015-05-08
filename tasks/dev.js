@@ -29,7 +29,8 @@ var buildBabel = function(watching){
 		src = src.pipe(watch(paths.js.concat(paths.exclude), {ignoreInitial: true}))
 	}
 	src.pipe(sourcemaps.init())
-		.pipe(babel()).pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");'))
+		.pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");'))
+		.pipe(babel())
 		.on('error', console.error.bind(console))
 		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest(paths.dest));
@@ -40,7 +41,8 @@ var buildBabel = function(watching){
 		src = src.pipe(watch(["index.js"], {ignoreInitial: true}))
 	}
 	src.pipe(sourcemaps.init())
-		.pipe(babel()).pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");require("./polyfill/system");'))
+		.pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");require("./polyfill/system");'))
+		.pipe(babel())
 		.on('error', console.error.bind(console))
 		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest(paths.dest));
