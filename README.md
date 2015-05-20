@@ -1,6 +1,7 @@
 # planck
-[![Build Status](https://travis-ci.org/PinkaminaDianePie/planck.svg)](https://travis-ci.org/PinkaminaDianePie/planck)
-[![Coverage Status](https://coveralls.io/repos/PinkaminaDianePie/planck/badge.svg?branch=develop)](https://coveralls.io/r/PinkaminaDianePie/planck?branch=develop)
+[![Build Status](https://travis-ci.org/planck/planck.svg)](https://travis-ci.org/planck/planck)
+[![Coverage Status](https://coveralls.io/repos/planck/planck/badge.svg)](https://coveralls.io/r/planck/planck)
+
 ## ES6 Node.js/iojs mvc framework.
 Next-gen framework builded complitly on es6/7. Currently all esnext features provided by [Babel](https://github.com/babel/babel).
 
