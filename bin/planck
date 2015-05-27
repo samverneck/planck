@@ -1,0 +1,1 @@
+import '../lib/cli/index.js';
