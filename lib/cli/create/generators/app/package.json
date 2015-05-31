@@ -1,0 +1,7 @@
+{
+  "planck": {
+  	"name": "app",
+    "moduleType": "generator",
+    "description": "create new app"
+  }
+}

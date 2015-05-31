@@ -1,2 +1,2 @@
 require("./polyfill/system");
-import * as planck from './lib/planck';
+export * from './lib/planck';

@@ -6,8 +6,10 @@ var plumber = require('gulp-plumber');
 
 var paths = (new function(){
 	this.dest = "build";
-	this.exclude = ["!{node_modules,node_modules/**}", "!{.git,.git/**}","!{build,build/**}", "!{logs,logs/**}", "!{coverage,coverage/**}", "!{tasks,tasks/**}", "!gulpfile.js"];
+	this.exclude = ["!{node_modules,node_modules/**}", "!{.git,.git/**}","!{build,build/**}", "!{bin,bin/**}", "!{logs,logs/**}", "!{coverage,coverage/**}", "!{tasks,tasks/**}", "!gulpfile.js"];
 	this.js = ["./**/*.js"];
+	this.test = ["{test,test/**/*.js}"];
+	this.cli = ["{bin,bin/**}"];
 }());
 
 var exclude = function(path){
@@ -21,18 +23,46 @@ var buildBabel = function(watching){
 	var watch = require("gulp-watch");
 	var babel = require("gulp-babel");
 	var insert = require("gulp-insert");
+	var rename = require("gulp-rename");
 	var sourcemaps = require("gulp-sourcemaps");
 
-	var src = gulp.src(paths.js.concat(paths.exclude).concat(["!index.js"]))
+	var src = gulp.src(paths.js.concat(paths.exclude, exclude(paths.test, paths.cli)).concat(["!index.js"]))
 		.pipe(plumber());
 	if (watching) {
-		src = src.pipe(watch(paths.js.concat(paths.exclude), {ignoreInitial: true}))
+		src = src.pipe(watch(paths.js.concat(paths.exclude, exclude(paths.test, paths.cli)), {ignoreInitial: true}))
 	}
 	src.pipe(sourcemaps.init())
-		.pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");'))
+		.pipe(insert.prepend('require("source-map-support").install();'))
 		.pipe(babel())
 		.on('error', console.error.bind(console))
 		.pipe(sourcemaps.write("."))
+		.pipe(gulp.dest(paths.dest));
+
+	var src = gulp.src(paths.test.concat(paths.exclude).concat(["!index.js"]))
+		.pipe(plumber());
+	if (watching) {
+		src = src.pipe(watch(paths.test.concat(paths.exclude), {ignoreInitial: true}))
+	}
+	src.pipe(sourcemaps.init())
+		.pipe(insert.prepend('require("source-map-support").install();require("babel-core/polyfill");'))
+		.pipe(babel())
+		.on('error', console.error.bind(console))
+		.pipe(sourcemaps.write("."))
+		.pipe(gulp.dest(paths.dest));
+
+	var src = gulp.src(paths.cli)
+		.pipe(plumber());
+	if (watching) {
+		src = src.pipe(watch(paths.cli, {ignoreInitial: true}))
+	}
+	src.pipe(sourcemaps.init())
+		.pipe(babel())
+		.on('error', console.error.bind(console))
+		.pipe(insert.prepend('require("source-map-support").install();require("babel-core/polyfill");require("../polyfill/system");'))
+		.pipe(insert.prepend('#!/usr/bin/env node\n'))
+		.pipe(sourcemaps.write(".")).pipe(rename({
+			extname: ""
+		}))
 		.pipe(gulp.dest(paths.dest));
 
 	var src = gulp.src(["index.js"])
@@ -41,7 +71,7 @@ var buildBabel = function(watching){
 		src = src.pipe(watch(["index.js"], {ignoreInitial: true}))
 	}
 	src.pipe(sourcemaps.init())
-		.pipe(insert.prepend('require("source-map-support").install();require("babel/polyfill");require("./polyfill/system");'))
+		.pipe(insert.prepend('require("source-map-support").install();'))
 		.pipe(babel())
 		.on('error', console.error.bind(console))
 		.pipe(sourcemaps.write("."))
@@ -52,13 +82,13 @@ gulp.task("watch", false, function() {
 	var watch = require("gulp-watch");
 	buildBabel(true);
 
-	gulp.src(["./**/*", "!./package.json"].concat(paths.exclude, exclude(paths.js)))
-		.pipe(watch(["./**/*", "!./package.json"].concat(paths.exclude, exclude(paths.js)), {ignoreInitial: true}))
+	gulp.src(["./**/*", "!./package.json"].concat(paths.exclude, exclude(paths.js, paths.test, paths.cli)))
+		.pipe(watch(["./**/*", "!./package.json"].concat(paths.exclude, exclude(paths.js, paths.test, paths.cli)), {ignoreInitial: true}))
 		.pipe(gulp.dest(paths.dest));
 });
 
 gulp.task("copy", false, function(){
-	return gulp.src(["./**/*"].concat(paths.exclude, exclude(paths.js)))
+	return gulp.src(["./**/*"].concat(paths.exclude, exclude(paths.js, paths.test, paths.cli)), {dot: true})
 		.pipe(gulp.dest(paths.dest));
 });
 
