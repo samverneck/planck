@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.10 (31 May 2015)
+ * **Fix**
+  * Fixed npm package
+
 ## 0.3.0 (31 May 2015)
  * **New Feature**
   * Basic support of cli. First command available is planck app <appname>: it creates template for new planck app. For using cli planck should be installed global.

@@ -7,7 +7,7 @@ coverage/
 *.log
 logs
 gulpfile.js
-index.js
+/index.js
 .babelrc
 .travis.yml
 .gitignore

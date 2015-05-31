@@ -6,7 +6,7 @@ var plumber = require('gulp-plumber');
 
 var paths = (new function(){
 	this.dest = "build";
-	this.exclude = ["!{node_modules,node_modules/**}", "!{.git,.git/**}","!{build,build/**}", "!{bin,bin/**}", "!{logs,logs/**}", "!{coverage,coverage/**}", "!{tasks,tasks/**}", "!gulpfile.js"];
+	this.exclude = ["!{node_modules,node_modules/**}", "!.gitignore", "!.npmignore", "!{.git,.git/**}","!{build,build/**}", "!{bin,bin/**}", "!{logs,logs/**}", "!{coverage,coverage/**}", "!{tasks,tasks/**}", "!gulpfile.js"];
 	this.js = ["./**/*.js"];
 	this.test = ["{test,test/**/*.js}"];
 	this.cli = ["{bin,bin/**}"];
