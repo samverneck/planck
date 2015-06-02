@@ -81,7 +81,7 @@ describe('router', () => {
 		describe('',() => {
 			before(async (done) => {	
 				class MyRouter extends Router.RouterHTTP{
-					constructor(resource){
+					constructor(resource, route){
 						super();
 						resource("users", res => {
 							res("friends", ["update"]);
@@ -93,6 +93,14 @@ describe('router', () => {
 							});
 						});
 						resource("nonexistent");
+						route("/admin", "admin.getInfo");
+						route("/my/password", "users.password", ["get", "post"]);
+						route.get("/my/info", "users.info");
+						route.post("/my/info", "users.info");
+						route.put("/my/info", "users.info");
+						route.patch("/my/info", "users.info");
+						route.delete("/my/info", "users.info");
+						route.get("/my/infoNoHandler", "users.noHandlerForRoute");
 					}
 				}
 				await app.use(MyRouter);
@@ -116,22 +124,27 @@ describe('router', () => {
 								  { type: 'post', path: '/groups/1/posts/2/comments', result: {}},
 								  { type: 'patch', path: '/groups/1/posts/2/comments/3', result: {}},
 								  { type: 'delete', path: '/groups/1/posts/2/comments/3', result: {}},
-								  { type: 'get', path: '/groups/1/posts/2/likes/3', result: '<html><body>{}</body></html>'} ];
-				let	routes501 =	[ { type: 'get', path: '/groups/1/posts/2/comments/3' }];
-				let	routes404 =	[ { type: 'get', path: '/users/1/friends' },
-								  { type: 'get', path: '/users/1/friends/22' },
-								  { type: 'post', path: '/users/1/friends' },
-								  { type: 'delete', path: '/users/1/friends/2' },
-								  { type: 'get', path: '/nonexistent' },
-								  { type: 'get', path: '/nonexistent/1' },
-								  { type: 'post', path: '/nonexistent' },
-								  { type: 'patch', path: '/nonexistent/1' },
-								  { type: 'delete', path: '/nonexistent/1' }];	
+								  { type: 'get', path: '/groups/1/posts/2/likes/3', result: '<html><body>{}</body></html>'},
+								  { type: 'get', path: '/admin', result: {data: {}}},
+								  { type: 'post', path: '/admin', result: {data: {}}},
+								  { type: 'patch', path: '/admin', result: {data: {}}},
+								  { type: 'put', path: '/admin', result: {data: {}}},
+								  { type: 'delete', path: '/admin', result: {data: {}}},
+								  { type: 'get', path: '/my/password', result: {data: {}}},
+								  { type: 'get', path: '/my/info', result: {data: {}}},
+								  { type: 'post', path: '/my/info', result: {data: {}}},
+								  { type: 'patch', path: '/my/info', result: {data: {}}},
+								  { type: 'put', path: '/my/info', result: {data: {}}},	  
+								  { type: 'delete', path: '/my/info', result: {data: {}}},
+								  { type: 'post', path: '/my/password', result: {data: {}}}];
 
 				let routesPromises = [];
 				for (let i = 0; i < routes.length; i++) {
 					routesPromises.push(new Promise((resolve, reject) => {
 						request('http://localhost:9000')[routes[i].type](routes[i].path).expect(200).end(function(err, res){
+							if (err) {
+								return reject(new Error(routes[i].path))
+							};
 							let isJson = false;
 							try{
 								if (typeof JSON.parse(res.text) !== 'string'){
@@ -145,13 +158,26 @@ describe('router', () => {
 							} else {
 								res.text.should.be.equal(routes[i].result);
 							}
-							if (err) {
-								return reject(err)
-							};
 							resolve();
 						});
 					}));
 				};
+				Promise.all(routesPromises).then(() => {
+					done();
+				}, (err) => {
+					done(err);
+				});
+			});
+			it('"resource" should create routes with 501 if something needed for route is not implemented', async (done) => {
+				let	routes501 =	[ { type: 'get', path: '/groups/1/posts/2/comments/3' },
+								  { type: 'get', path: '/nonexistent' },
+								  { type: 'get', path: '/nonexistent/1' },
+								  { type: 'post', path: '/nonexistent' },
+								  { type: 'patch', path: '/nonexistent/1' },
+								  { type: 'delete', path: '/nonexistent/1' },
+								  { type: 'get', path: '/my/infoNoHandler' }];
+
+				let routesPromises = [];
 				for (let i = 0; i < routes501.length; i++) {
 					routesPromises.push(new Promise((resolve, reject) => {
 						request('http://localhost:9000')[routes501[i].type](routes501[i].path).expect(501).end(function(err, res){
@@ -162,6 +188,22 @@ describe('router', () => {
 						});
 					}));
 				};
+				Promise.all(routesPromises).then(() => {
+					done();
+				}, (err) => {
+					done(err);
+				});
+			});
+			it('"resource" should return 404 for all another requests', async (done) => {
+				let	routes404 =	[ { type: 'get', path: '/users/1/friends' },
+								  { type: 'get', path: '/users/1/friends/22' },
+								  { type: 'post', path: '/users/1/friends' },
+								  { type: 'delete', path: '/users/1/friends/2' },
+								  { type: 'put', path: '/my/password' },
+								  { type: 'patch', path: '/my/password' },
+								  { type: 'delete', path: '/my/password' }];
+
+				let routesPromises = [];
 				for (let i = 0; i < routes404.length; i++) {
 					routesPromises.push(new Promise((resolve, reject) => {
 						request('http://localhost:9000')[routes404[i].type](routes404[i].path).expect(404).end(function(err, res){
@@ -176,7 +218,7 @@ describe('router', () => {
 					done();
 				}, (err) => {
 					done(err);
-				})
+				});
 			});
 		});
 	});

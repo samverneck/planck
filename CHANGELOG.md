@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 (2 June 2015)
+ * **New Feature**
+  * Added route helper for http router. It need to manualy define single route and bind it on method in provided controller.
+ * **Fix**
+  * Added put requests in http resource helper.
+  * Fixed some cases where router returned 404 insted 501 if something missed in client code.
+
 ## 0.3.10 (31 May 2015)
  * **Fix**
   * Fixed npm package

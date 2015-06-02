@@ -1,16 +1,13 @@
 import * as Controller from '../../../lib/controller/controller';
 import AppController from './app-controller';
 
-class Users extends AppController{
+class Admin extends AppController{
 	constructor(){
 		super();
 	}
-	password(){
-
-	}
-	info(){
-
+	getInfo(){
+		
 	}
 }
 
-export default Users;
+export default Admin;
