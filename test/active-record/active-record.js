@@ -9,7 +9,7 @@ const should = chai.should();
 describe('active-record', () => {
 	let app;
 	before(async (done) => {
-		app = await new App('build/test/mocks/config/main');
+		app = await new App(`.${process.env.UNDER_NODE_BABEL?'':'/build'}/test/mocks/config/main`);
 		done();
 	});
 

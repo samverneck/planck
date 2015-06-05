@@ -24,18 +24,15 @@ var buildBabel = function(watching){
 	var babel = require("gulp-babel");
 	var insert = require("gulp-insert");
 	var rename = require("gulp-rename");
-	var sourcemaps = require("gulp-sourcemaps");
 
 	var src = gulp.src(paths.js.concat(paths.exclude, exclude(paths.test, paths.cli)).concat(["!index.js"]))
 		.pipe(plumber());
 	if (watching) {
 		src = src.pipe(watch(paths.js.concat(paths.exclude, exclude(paths.test, paths.cli)), {ignoreInitial: true}))
 	}
-	src.pipe(sourcemaps.init())
-		.pipe(insert.prepend('require("source-map-support").install();'))
-		.pipe(babel())
+	src.pipe(insert.prepend('require("source-map-support").install();'))
+		.pipe(babel({sourceMaps: "inline"}))
 		.on('error', console.error.bind(console))
-		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest(paths.dest));
 
 	var src = gulp.src(paths.test.concat(paths.exclude).concat(["!index.js"]))
@@ -43,11 +40,9 @@ var buildBabel = function(watching){
 	if (watching) {
 		src = src.pipe(watch(paths.test.concat(paths.exclude), {ignoreInitial: true}))
 	}
-	src.pipe(sourcemaps.init())
-		.pipe(insert.prepend('require("source-map-support").install();require("babel-core/polyfill");'))
-		.pipe(babel())
+	src.pipe(insert.prepend('require("source-map-support").install();require("babel-core/polyfill");'))
+		.pipe(babel({sourceMaps: "inline"}))
 		.on('error', console.error.bind(console))
-		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest(paths.dest));
 
 	var src = gulp.src(paths.cli)
@@ -55,12 +50,11 @@ var buildBabel = function(watching){
 	if (watching) {
 		src = src.pipe(watch(paths.cli, {ignoreInitial: true}))
 	}
-	src.pipe(sourcemaps.init())
-		.pipe(babel())
+	src.pipe(babel({sourceMaps: "inline"}))
 		.on('error', console.error.bind(console))
 		.pipe(insert.prepend('require("source-map-support").install();require("babel-core/polyfill");require("../polyfill/system");'))
 		.pipe(insert.prepend('#!/usr/bin/env node\n'))
-		.pipe(sourcemaps.write(".")).pipe(rename({
+		.pipe(rename({
 			extname: ""
 		}))
 		.pipe(gulp.dest(paths.dest));
@@ -70,11 +64,9 @@ var buildBabel = function(watching){
 	if (watching) {
 		src = src.pipe(watch(["index.js"], {ignoreInitial: true}))
 	}
-	src.pipe(sourcemaps.init())
-		.pipe(insert.prepend('require("source-map-support").install();'))
-		.pipe(babel())
+	src.pipe(insert.prepend('require("source-map-support").install();'))
+		.pipe(babel({sourceMaps: "inline"}))
 		.on('error', console.error.bind(console))
-		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest(paths.dest));
 }
 // ==== live rebuild on developement

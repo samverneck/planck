@@ -6,7 +6,6 @@ import request from 'supertest';
 import chaiSubset from 'chai-subset';
 
 chai.use(chaiSubset);
-
 const should = chai.should();
 
 describe('router', () => {
@@ -20,7 +19,7 @@ describe('router', () => {
 		
 		before(async (done) => {
 			cwd = process.cwd();
-			process.chdir("./build/test/mocks");
+			process.chdir(`.${process.env.UNDER_NODE_BABEL?'':'/build'}/test/mocks`);
 			app = await new App();
 
 			done();
@@ -101,6 +100,9 @@ describe('router', () => {
 						route.patch("/my/info", "users.info");
 						route.delete("/my/info", "users.info");
 						route.get("/my/infoNoHandler", "users.noHandlerForRoute");
+						route(); //also fail
+						route("/fail");
+						route("/fail2", "onlyControllerName");
 					}
 				}
 				await app.use(MyRouter);
@@ -125,11 +127,11 @@ describe('router', () => {
 								  { type: 'patch', path: '/groups/1/posts/2/comments/3', result: {}},
 								  { type: 'delete', path: '/groups/1/posts/2/comments/3', result: {}},
 								  { type: 'get', path: '/groups/1/posts/2/likes/3', result: '<html><body>{}</body></html>'},
-								  { type: 'get', path: '/admin', result: {data: {}}},
-								  { type: 'post', path: '/admin', result: {data: {}}},
-								  { type: 'patch', path: '/admin', result: {data: {}}},
-								  { type: 'put', path: '/admin', result: {data: {}}},
-								  { type: 'delete', path: '/admin', result: {data: {}}},
+								  { type: 'get', path: '/admin', result: {}},
+								  { type: 'post', path: '/admin', result: {}},
+								  { type: 'patch', path: '/admin', result: {}},
+								  { type: 'put', path: '/admin', result: {}},
+								  { type: 'delete', path: '/admin', result: {}},
 								  { type: 'get', path: '/my/password', result: {data: {}}},
 								  { type: 'get', path: '/my/info', result: {data: {}}},
 								  { type: 'post', path: '/my/info', result: {data: {}}},
@@ -201,7 +203,9 @@ describe('router', () => {
 								  { type: 'delete', path: '/users/1/friends/2' },
 								  { type: 'put', path: '/my/password' },
 								  { type: 'patch', path: '/my/password' },
-								  { type: 'delete', path: '/my/password' }];
+								  { type: 'delete', path: '/my/password' },								  
+								  { type: 'get', path: '/fail' },
+								  { type: 'get', path: '/fail2' }];
 
 				let routesPromises = [];
 				for (let i = 0; i < routes404.length; i++) {
