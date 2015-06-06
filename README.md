@@ -1,6 +1,6 @@
 # planck
 [![Build Status](https://travis-ci.org/planck/planck.svg)](https://travis-ci.org/planck/planck)
-[![Coverage Status](https://coveralls.io/repos/planck/planck/badge.svg)](https://coveralls.io/r/planck/planck)
+[![Coverage Status](https://coveralls.io/repos/planck/planck/badge.svg?branch=master)](https://coveralls.io/r/planck/planck?branch=master)
 [![Dependency Status](https://david-dm.org/planck/planck.svg)](https://david-dm.org/planck/planck)
 [![devDependency Status](https://david-dm.org/planck/planck/dev-status.svg)](https://david-dm.org/planck/planck#info=devDependencies)
 
