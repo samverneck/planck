@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/PinkaminaDianePie/planck",
   "devDependencies": {
-    "babel": "^5.4.7",
+    "babel": "5.4.7",
     "chai": "^3.0.0",
     "chai-subset": "^1.0.0",
     "co-mocha": "^1.1.0",
@@ -40,7 +40,7 @@
     "supertest": "^1.0.1"
   },
   "dependencies": {
-    "babel-core": "^5.4.7",
+    "babel-core": "5.4.7",
     "commander": "^2.8.1",
     "ejs": "^2.3.1",
     "express": "^4.12.3",
