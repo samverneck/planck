@@ -1,14 +1,12 @@
 import chai from 'chai';
 import * as namespace from '../index';
 
-
 const should = chai.should();
 
 describe('planck entry point should be namespace with all main classes:', () => {
 	it('App', () => {
 		should.exist(namespace.App);
 		namespace.App.should.be.a('function');
-		//console.log(namespace)
 	});
 	it('Router', () => {
 		should.exist(namespace.Router);
