@@ -16,20 +16,19 @@ describe('router', () => {
 	describe('"RouterHTTP" class', () => {
 		let app;
 		let cwd;
-		
+
 		before(async (done) => {
 			cwd = process.cwd();
 			process.chdir(`.${process.env.UNDER_NODE_BABEL?'':'/build'}/test/mocks`);
 			app = await new App();
-
 			done();
 		});
 
 		after(async (done) => {
 			app.dbProviderPool.databases = {};
 			process.chdir(cwd);
-			done();
-		});	
+			app.httpServer.close(() => done());
+		});
 
 		it('should not be created without subclassing', () => {
 			(() => {new Router.RouterHTTP();}).should.throw(AbstractClassError);
@@ -39,7 +38,7 @@ describe('router', () => {
 				}
 			}
 			(() => {new MyRouter();}).should.not.throw();
-		});	
+		});
 		it('subclass can be passed to "app.use()" and created by it', async (done) => {
 			class MyRouter extends Router.RouterHTTP{
 				constructor(){
@@ -69,7 +68,7 @@ describe('router', () => {
 					resource("groups", res => {
 						res("posts", ["create", "read"], res => {
 							res("comments");
-							res("likes", ["read"]);  
+							res("likes", ["read"]);
 						});
 					});
 				}
@@ -78,7 +77,7 @@ describe('router', () => {
 			done();
 		});
 		describe('',() => {
-			before(async (done) => {	
+			before(async (done) => {
 				class MyRouter extends Router.RouterHTTP{
 					constructor(resource, route){
 						super();
@@ -88,7 +87,7 @@ describe('router', () => {
 						resource("groups", res => {
 							res("posts", ["create", "read"], res => {
 								res("comments");
-								res("likes", ["read"]);  
+								res("likes", ["read"]);
 							});
 						});
 						resource("nonexistent");
@@ -107,7 +106,7 @@ describe('router', () => {
 				}
 				await app.use(MyRouter);
 				done();
-			});		
+			});
 			it('"resource" should create restful routes', async (done) => {
 				let	routes =	[ { type: 'get', path: '/users', result: {data: {res: 'readAll'}}},
 								  { type: 'get', path: '/users/1', result: {data: {user: {id: '1'}}}},
@@ -136,7 +135,7 @@ describe('router', () => {
 								  { type: 'get', path: '/my/info', result: {data: {}}},
 								  { type: 'post', path: '/my/info', result: {data: {}}},
 								  { type: 'patch', path: '/my/info', result: {data: {}}},
-								  { type: 'put', path: '/my/info', result: {data: {}}},	  
+								  { type: 'put', path: '/my/info', result: {data: {}}},
 								  { type: 'delete', path: '/my/info', result: {data: {}}},
 								  { type: 'post', path: '/my/password', result: {data: {}}}];
 
@@ -203,7 +202,7 @@ describe('router', () => {
 								  { type: 'delete', path: '/users/1/friends/2' },
 								  { type: 'put', path: '/my/password' },
 								  { type: 'patch', path: '/my/password' },
-								  { type: 'delete', path: '/my/password' },								  
+								  { type: 'delete', path: '/my/password' },
 								  { type: 'get', path: '/fail' },
 								  { type: 'get', path: '/fail2' }];
 

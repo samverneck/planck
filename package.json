@@ -1,13 +1,13 @@
 {
   "name": "planck",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "es6/7 oop framework",
   "main": "build/index.js",
   "bin": {
     "planck": "./build/bin/planck"
   },
   "scripts": {
-    "test": "mocha --harmony 'build/test/**/*.js'",
+    "test": "mocha --harmony 'build/test/**/*.js'  -R spec",
     "test-ci": "export UNDER_NODE_BABEL=1; ./node_modules/babel/bin/babel-node node_modules/.bin/isparta cover _mocha --report lcovonly -- --recursive --reporter spec"
   },
   "repository": {
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/PinkaminaDianePie/planck",
   "devDependencies": {
     "babel": "5.4.7",
+    "babel-eslint": "^3.1.15",
     "chai": "^3.0.0",
     "chai-subset": "^1.0.0",
     "co-mocha": "^1.1.0",
