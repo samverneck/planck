@@ -6,8 +6,8 @@
     },
     "rules": {
         "strict": 0,
-        "quotes": "single",
-        "no-else-return": true,
-        "no-underscore-dangle": true
+        "quotes": [2, "single", "avoid-escape"],
+        "no-else-return": 2,
+        "no-underscore-dangle": 2
     }
 }
