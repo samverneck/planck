@@ -3,7 +3,7 @@ import chai from 'chai';
 import App from '../lib/app';
 import * as Router from '../lib/router/router';
 import chaiSubset from 'chai-subset';
-import {inject} from '../lib/decorators';
+import {inject, singleton, abstractMethodAsync} from '../lib/decorators';
 
 chai.use(chaiSubset);
 const should = chai.should();
@@ -81,6 +81,30 @@ describe('Decorators', () => {
 			await app.use(MyRouter);
 			done(new Error("it should fail but it not"));
 		} catch(e) {
+			done();
+		}
+	});
+
+    it('@singleton should force target class to be singleton', () => {
+		@singleton
+		class A{
+		}
+		new A().should.be.equal(new A());
+	});
+
+    it('@abstractMethodAsync', async (done) => {
+		class A{
+			constructor(){
+
+			}
+			@abstractMethodAsync()
+			async f(){
+			}
+		}
+		try{
+			await new A().f();
+			done(new Error);
+		} catch (e) {
 			done();
 		}
 	});

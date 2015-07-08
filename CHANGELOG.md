@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.0 (8 July 2015) - Reflection update
+ * **New Feature**
+  * Added new module - Reflection. It used for work with any metadata in framework.
+  * Added possibility to use @inject() with controller's methods.
+  * Added AngularJS-like arguments parsing, so if no @inject() provided - method's params will be parsed and used for DI, so for now all params in controllers and routers are position-agnostic.
+  * Added helpers for controller: @skipBefore() and @skipAfter(). They are used to prevent execution of corresponding @before() and @after() from entire inheritance chain.
+ * **Internal**
+  * All private metadata have changed from dashed properties (like ```__beforeHandlers```) to symbols from Reflection module
+ * **Fix**
+  * fixed @abstractMethodAsync(), now it correctly worked for non-static methods
+
 ## 0.5.0 (20 June 2015) - Middleware update
  * **New Feature**
   * Added helpers for http router: rawRouter (raw Express app for low-level actions)

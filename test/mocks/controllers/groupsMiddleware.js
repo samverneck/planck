@@ -1,5 +1,6 @@
 import * as Controller from '../../../lib/controller/controller';
 import Users from './usersMiddleware';
+import * as Reflection from '../../../lib/reflection';
 
 @Controller.before(function(params){
 	this.before.push(2);
@@ -42,7 +43,7 @@ class Groups extends Users{
 	}, 'unexisted', 'afterMethodHandler')
 	@Controller.after('afterMethodHandlerFromParent')
 	testMiddleware(params){
-		super.testMiddleware(params);
+		Reflection.invokeSuper(super.testMiddleware, this);
 	}
 
 	beforeAllHandler(){
