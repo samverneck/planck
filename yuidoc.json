@@ -1,0 +1,14 @@
+{
+    "name": "Planck",
+    "description": "ES2015/2016 Node.js/iojs mvc framework.",
+    "version": "0.6.0",
+    "url": "http://url.com/",
+    "options": {
+        "linkNatives": "true",
+        "exclude": "active-record",
+        "attributesEmit": "true",
+        "paths": "./lib",
+        "outdir": "build/jsdoc",
+        "tabtospace": 4
+    }
+}
