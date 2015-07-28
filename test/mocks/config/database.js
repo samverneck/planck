@@ -4,9 +4,9 @@ const config = {
 		port: '27017',
 		type: 'mongo'
 	},
-	secondTestDB: {
+	testDB: {
 		host: 'localhost',
-		port: '27018',
+		port: '27017',
 		type: 'mongo'
 	}
 };

@@ -9,7 +9,7 @@ class Admin extends AppController{
 	}
 	@Controller.useViews('base')
 	getInfo(){
-		
+
 	}
 }
 
