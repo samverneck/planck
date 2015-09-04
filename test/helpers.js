@@ -35,7 +35,7 @@ describe('helpers', () => {
 	it('promissifyModule should return clone of module, with all methods changed to promissified api', async (done) => {
 		let myFs = Planck.helpers.promissifyModule(fs);
 		try{
-			let stat = await myFs.stat(__dirname)	
+			let stat = await myFs.stat(__dirname)
 			stat.isDirectory().should.be.true;
 			done();
 		} catch(err) {

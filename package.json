@@ -21,11 +21,12 @@
   },
   "homepage": "https://github.com/PinkaminaDianePie/planck",
   "devDependencies": {
-    "babel": "5.5.8",
-    "babel-eslint": "^3.1.15",
+    "babel": "^5.8.12",
+    "babel-eslint": "^4.0.5",
     "chai": "^3.0.0",
     "chai-subset": "^1.0.0",
     "co-mocha": "^1.1.0",
+    "database-cleaner": "^0.10.0",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-babel": "^5.1.0",
@@ -41,12 +42,12 @@
     "supertest": "^1.0.1"
   },
   "dependencies": {
-    "babel-core": "5.5.8",
+    "babel-core": "^5.8.12",
     "commander": "^2.8.1",
     "ejs": "^2.3.1",
     "express": "^4.12.3",
-    "mongodb": "^2.0.31",
+    "mongodb": "^2.0.39",
     "path-is-absolute": "^1.0.0",
-    "source-map-support": "^0.2.10"
+    "source-map-support": "^0.3.2"
   }
 }
