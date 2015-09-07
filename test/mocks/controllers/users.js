@@ -11,6 +11,9 @@ class Users extends AppController{
 	info(){
 
 	}
+	adminFromUsers(){
+		
+	}
 }
 
 export default Users;
