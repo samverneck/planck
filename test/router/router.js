@@ -62,13 +62,13 @@ describe('router', () => {
 			class MyRouter extends Router.RouterHTTP{
 				constructor(resource){
 					super();
-					resource("users", res => {
-						res("friends", ["update"]);
+					resource("users", () => {
+						resource("friends", ["update"]);
 					});
-					resource("groups", res => {
-						res("posts", ["create", "read"], res => {
-							res("comments");
-							res("likes", ["read"]);
+					resource("groups", () => {
+						resource("posts", ["create", "read"], () => {
+							resource("comments");
+							resource("likes", ["read"]);
 						});
 					});
 				}
@@ -78,35 +78,42 @@ describe('router', () => {
 		});
 		describe('',() => {
 			before(async (done) => {
+				app.dbProviderPool.databases = {};
+				app.httpServer.close(() => done());
+				app = await new App();
+
 				class MyRouter extends Router.RouterHTTP{
 					constructor(resource, route){
 						super();
-						resource("users", res => {
-							res("friends", ["update"]);
+						resource('users', () => {
+							resource('friends', ['update']);
+							route('admin', 'admin.getInfo');
+							route('/adminFromUsers');
 						});
-						resource("groups", res => {
-							res("posts", ["create", "read"], res => {
-								res("comments");
-								res("likes", ["read"]);
+						resource('groups', () => {
+							resource('posts', ['create', 'read'], () => {
+								resource('comments');
+								resource('likes', ['read']);
 							});
 						});
-						resource("nonexistent");
-						route("/admin", "admin.getInfo");
-						route("/my/password", "users.password", ["get", "post"]);
-						route.get("/my/info", "users.info");
-						route.post("/my/info", "users.info");
-						route.put("/my/info", "users.info");
-						route.patch("/my/info", "users.info");
-						route.delete("/my/info", "users.info");
-						route.get("/my/infoNoHandler", "users.noHandlerForRoute");
+						resource('nonexistent');
+						route('/admin', 'admin.getInfo');
+						route('/my/password', 'users.password', ['get', 'post']);
+						route.get('/my/info', 'users.info');
+						route.post('/my/info', 'users.info');
+						route.put('/my/info', 'users.info');
+						route.patch('/my/info', 'users.info');
+						route.delete('/my/info', 'users.info');
+						route.get('/my/infoNoHandler', 'users.noHandlerForRoute');
 						route(); //also fail
-						route("/fail");
-						route("/fail2", "onlyControllerName");
+						route('/fail');
+						route('/fail2', 'onlyControllerName');
 					}
 				}
 				await app.use(MyRouter);
 				done();
 			});
+
 			it('"resource" should create restful routes', async (done) => {
 				let	routes =	[ { type: 'get', path: '/users', result: {data: {res: 'readAll'}}},
 								  { type: 'get', path: '/users/1', result: {data: {user: {id: '1'}}}},
@@ -114,6 +121,8 @@ describe('router', () => {
 								  { type: 'patch', path: '/users/1', result: {data: {res: 'update'}}},
 								  { type: 'delete', path: '/users/1', result: {data: {}}},
 								  { type: 'patch', path: '/users/1/friends/2', result: {}},
+								  { type: 'get', path: '/users/admin', result: {}},
+								  { type: 'get', path: '/users/adminFromUsers', result: {data: {}}},
 								  { type: 'get', path: '/groups', result: '<html><body>{"res":"readAll"}</body></html>'},
 								  { type: 'get', path: '/groups/1', result: {data: {user: {id: '1'}}, status: 200}},
 								  { type: 'post', path: '/groups', result: {data: {}, status: 200}},
