@@ -6,6 +6,8 @@ let A = [{
     name: 'foo',
     blocked: false,
     tokens: [],
+    fieldsTest1 : "test1",
+    fieldsTest2 : "test1",
     position: {
         alt: 0,
         long: 0
@@ -16,6 +18,8 @@ let A = [{
     name: 'foo2',
     blocked: false,
     tokens: [],
+    fieldsTest1 : "test2",
+    fieldsTest2 : "test2",
     position: {
         alt: 0,
         long: 0
@@ -26,6 +30,8 @@ let A = [{
     name: 'foo1',
     blocked: false,
     tokens: [],
+    fieldsTest1 : "test3",
+    fieldsTest2 : "test3",
     position: {
         alt: 0,
         long: 0
@@ -36,6 +42,8 @@ let A = [{
     name: 'foo',
     blocked: false,
     tokens: [],
+    fieldsTest1 : "test4",
+    fieldsTest2 : "test4",
     position: {
         alt: 0,
         long: 0

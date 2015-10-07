@@ -378,6 +378,43 @@ describe('active-record', () => {
 				}
 			});
 		});
+		describe('"fields" method', () => {
+			let A;
+			beforeEach(async (done) => {
+				A = await createClass();
+				done();
+			});
+			it('should get objects from db which include fields, specified in array', async (done) => {
+				try {
+					let a = await A.get().fields("fieldsTest1","id");
+					should.exist(a[0].fieldsTest1);
+					should.not.exist(a[0].fieldsTest2);
+					done();
+				} catch(e) {
+					done(e);
+				}
+			});
+			it('should get objects from db which include fields, specified in object', async (done) => {
+				try {
+					let a = await A.get().fields({"fieldsTest1" : 1});
+					should.exist(a[0].fieldsTest1);
+					should.not.exist(a[0].fieldsTest2);
+					done();
+				} catch(e) {
+					done(e);
+				}
+			});
+			it('should get objects from db which exclude fields, specified in object', async (done) => {
+				try {
+					let a = await A.get().fields({"fieldsTest1" : 0});
+					should.exist(a[0].fieldsTest2);
+					should.not.exist(a[0].fieldsTest1);
+					done();
+				} catch(e) {
+					done(e);
+				}
+			});
+		});
 		describe('"save" method', () => {
 			let A;
 			beforeEach(async (done) => {
