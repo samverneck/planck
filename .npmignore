@@ -1,13 +1,10 @@
-lib/
 test/
 tasks/
-polyfill/
 examples/
 coverage/
 *.log
 logs
 gulpfile.js
-/index.js
 .babelrc
 .travis.yml
 .gitignore
