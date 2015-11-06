@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.7.1 (6 November 2015) - System and active-record update
+## 0.7.2 (6 November 2015)
+* **Fix**
+ * fixed paths for SystemJS
+
+## 0.7.1 (6 November 2015)
 * **Fix**
  * fixed missing dependencies
 
