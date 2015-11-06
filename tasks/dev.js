@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var gulp = require('gulp-help')(require('gulp'));
 var runSequence = require("run-sequence");
@@ -79,8 +79,15 @@ gulp.task("watch", false, function() {
 		.pipe(gulp.dest(paths.dest));
 });
 
+// gulp.task("copy", false, function(){
+// 	return gulp.src(["./**/*"].concat(paths.exclude, exclude(paths.js, paths.test, paths.cli)), {dot: true})
+// 		.pipe(gulp.dest(paths.dest));
+// });
+
 gulp.task("copy", false, function(){
-	return gulp.src(["./**/*"].concat(paths.exclude, exclude(paths.js, paths.test, paths.cli)), {dot: true})
+	let replace = require('gulp-replace');
+	return gulp.src(['./**/*'].concat(paths.exclude, exclude(paths.test, paths.cli)), {dot: true})
+		.pipe(replace('@node/', ''))
 		.pipe(gulp.dest(paths.dest));
 });
 
@@ -98,7 +105,8 @@ gulp.task("clean", "clean server folder in build directory", function (cb) {
 });
 
 gulp.task("build", "create full build", function(cb){
-	return runSequence("clean", ["copy", "babel"], cb);
+	return runSequence("clean", ["copy"], cb);
+
 }, {
 	aliases: ['b']
 });

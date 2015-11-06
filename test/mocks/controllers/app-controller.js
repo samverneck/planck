@@ -10,10 +10,10 @@ class AppController extends Controller.Base{
 	}
 
 	readAll(params){
-		this.res = "readAll";
+		this.res = 'readAll';
 	}
 	update(params){
-		this.res = "update";
+		this.res = 'update';
 	}
 }
 

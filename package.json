@@ -1,14 +1,14 @@
 {
   "name": "planck",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "es6/7 oop framework",
   "main": "build/index.js",
   "bin": {
-    "planck": "./build/bin/planck"
+    "planck": "./bin/planck"
   },
   "scripts": {
-    "test": "mocha --harmony 'build/test/**/*.js'  -R spec",
-    "test-ci": "export UNDER_NODE_BABEL=1; ./node_modules/babel/bin/babel-node node_modules/.bin/isparta cover _mocha --report lcovonly -- --recursive --reporter spec"
+    "test": "export UNDER_NODE_BABEL=1; ./node_modules/babel/bin/babel-node.js --es_staging node_modules/mocha/bin/_mocha ./test/all --reporter spec",
+    "test-ci": "export UNDER_NODE_BABEL=1; ./node_modules/babel/bin/babel-node.js node_modules/.bin/isparta.js cover _mocha ./test/all --report lcovonly -- --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,6 @@
     "babel": "^5.8.12",
     "babel-eslint": "^4.0.5",
     "chai": "^3.0.0",
-    "chai-subset": "^1.0.0",
     "co-mocha": "^1.1.0",
     "database-cleaner": "^0.10.0",
     "del": "^1.1.1",
@@ -43,11 +42,13 @@
   },
   "dependencies": {
     "babel-core": "^5.8.12",
+    "body-parser": "^1.14.1",
     "commander": "^2.8.1",
     "ejs": "^2.3.1",
-    "express": "^4.12.3",
+    "express": "^4.13.3",
     "mongodb": "^2.0.39",
     "path-is-absolute": "^1.0.0",
-    "source-map-support": "^0.3.2"
+    "source-map-support": "^0.3.2",
+    "systemjs": "^0.19.5"
   }
 }

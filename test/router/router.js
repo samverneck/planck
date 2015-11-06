@@ -1,9 +1,8 @@
-import '../../index';
-import chai from 'chai';
+import chai from '@node/chai';
 import App from '../../lib/app';
 import * as Router from '../../lib/router/router.js';
-import request from 'supertest';
-import chaiSubset from 'chai-subset';
+import request from '@node/supertest';
+import chaiSubset from '@node/chai-subset';
 
 chai.use(chaiSubset);
 const should = chai.should();
@@ -79,7 +78,7 @@ describe('router', () => {
 		describe('',() => {
 			before(async (done) => {
 				app.dbProviderPool.databases = {};
-				app.httpServer.close(() => done());
+				app.httpServer.close();
 				app = await new App();
 
 				class MyRouter extends Router.RouterHTTP{
@@ -153,7 +152,8 @@ describe('router', () => {
 					routesPromises.push(new Promise((resolve, reject) => {
 						request('http://localhost:9000')[routes[i].type](routes[i].path).expect(200).end(function(err, res){
 							if (err) {
-								return reject(new Error(routes[i].path))
+								console.error("__",err, routes[i].type,routes[i].path);
+								return reject(err, new Error(routes[i].path))
 							};
 							let isJson = false;
 							try{

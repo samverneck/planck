@@ -1,8 +1,7 @@
-import '../index';
-import chai from 'chai';
+import chai from '@node/chai';
 import App from '../lib/app';
 import * as Router from '../lib/router/router';
-import chaiSubset from 'chai-subset';
+import chaiSubset from '@node/chai-subset';
 import {inject, singleton, abstractMethodAsync} from '../lib/decorators';
 
 chai.use(chaiSubset);
