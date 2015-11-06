@@ -1,6 +1,6 @@
-import chai from 'chai';
-import * as Planck from '../../index';
-import chaiSubset from 'chai-subset';
+import chai from '@node/chai';
+import * as Planck from '../../lib/planck';
+import chaiSubset from '@node/chai-subset';
 
 chai.use(chaiSubset);
 

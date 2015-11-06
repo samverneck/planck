@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.0 (6 November 2015) - System and active-record update
+ * **New Feature**
+  * Added new feature - auto code generation. If special flag in config are turned on some core modules, such controllers or models will be generated automatically on their require. For example if you create new resource in your router and restart server it will create controller for this resource and put it in your controller's folder. This feature can increase fast bootstrap of new project and can be turned off in production. In current release only simple controllers are generates.
+  * Added some simple CRUD methods for active-record. Active-record now is state-machine for better chaining validation.
+  * Added resolvers for CRUD methods in mongodb provider.
+  * Added error handler for rendering in views.
+ * **Internal**
+  * Switched to SystemJS. It will help to provide flexible runtime code-generators for development.
+  * Many small changes in most files due switching to SystemJS process.
+
 ## 0.6.0 (8 July 2015) - Reflection update
  * **New Feature**
   * Added new module - Reflection. It used for work with any metadata in framework.

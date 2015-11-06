@@ -1,5 +1,5 @@
-import DatabaseCleaner from 'database-cleaner';
-import {MongoClient} from 'mongodb';
+import DatabaseCleaner from '@node/database-cleaner';
+import {MongoClient} from '@node/mongodb';
 import * as mocks from './db-mocks';
 
 let mongoUri = 'mongodb://127.0.0.1:27017/testDB';

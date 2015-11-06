@@ -1,1 +1,6 @@
-import '../lib/cli/index.js';
+#!/usr/bin/env node
+require('../polyfill/system.js');
+
+System.import('./lib/cli/index.js')
+    .then((res) => {console.log(res)})
+    .catch((res) => {console.log(res)});

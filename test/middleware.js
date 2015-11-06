@@ -1,9 +1,8 @@
-import '../index';
-import chai from 'chai';
+import chai from '@node/chai';
 import App from '../lib/app';
 import * as Router from '../lib/router/router';
-import request from 'supertest';
-import chaiSubset from 'chai-subset';
+import request from '@node/supertest';
+import chaiSubset from '@node/chai-subset';
 import {inject} from '../lib/decorators';
 
 chai.use(chaiSubset);

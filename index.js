@@ -1,2 +1,3 @@
-require("./polyfill/system");
+//require("./polyfill/system");
+
 export * from './lib/planck';

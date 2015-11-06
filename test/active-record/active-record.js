@@ -1,11 +1,10 @@
-import '../../index';
 import App from '../../lib/app';
-import chai from 'chai';
+import chai from '@node/chai';
 import * as ActiveRecord from '../../lib/active-record/active-record';
 import * as ActiveRecordDBProvider from '../../lib/active-record/lib/active-record-db-provider/active-record-db-provider';
 import {symbols} from '../../lib/reflection';
 import '../mocks/db';
-import {ObjectID} from 'mongodb';
+import {ObjectID} from '@node/mongodb';
 
 const should = chai.should();
 

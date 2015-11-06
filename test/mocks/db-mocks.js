@@ -1,4 +1,4 @@
-import {ObjectID} from 'mongodb';
+import {ObjectID} from '@node/mongodb';
 
 let A = [{
     _id: new ObjectID('55c49eb60ab6c5fa43e76f98'),

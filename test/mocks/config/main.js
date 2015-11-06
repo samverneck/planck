@@ -5,6 +5,12 @@ const config = {
 	database: database,
 	http: {
 		port: 9000
+	},
+	codeGeneration: {
+		autoGeneration: false
+	},
+	controllers: {
+		path: './test/mocks/controllers/'
 	}
 };
 

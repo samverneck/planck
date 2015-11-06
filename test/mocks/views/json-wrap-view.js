@@ -4,7 +4,7 @@ class JSONWrapView extends View.Base{
 	constructor(){
 		super();
 	}
-	render(data){
+	resolve(data){
 		return {data: data};
 	}
 }

@@ -4,7 +4,7 @@ class HTMLTestView extends View.Json{
 	constructor(){
 		super();
 	}
-	render(data){
+	resolve(data){
 		return `<html><body>${JSON.stringify(data)}</body></html>`;
 	}
 }

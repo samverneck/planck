@@ -4,7 +4,7 @@ class JSONWrapExtendedView extends JSONWrapView{
 	constructor(){
 		super();
 	}
-	render(data){
+	resolve(data){
 		return {data: data, status: 200};
 	}
 }
