@@ -1,4 +1,5 @@
 import chai from '@node/chai';
+import fs from '@node/fs';
 import App from '../../lib/app';
 import * as Router from '../../lib/router/router.js';
 
@@ -11,14 +12,18 @@ describe('code-generator', () => {
     before(async (done) => {
         try{
             cwd = process.cwd();
+            try{
+                fs.mkdirSync(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/code-generator/mocks`);
+            } catch(e) {
+            }
             process.chdir(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/code-generator/mocks`);
             let config = await System.import(`./test/mocks/config/main`);
             app = await new App(config.default);
             app.config.codeGeneration.autoGeneration = true;
+            done();
         }catch(e){
             done(e);
         }
-        done();
     });
 
     after(async (done) => {
