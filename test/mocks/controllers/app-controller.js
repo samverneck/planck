@@ -9,8 +9,8 @@ class AppController extends Controller.Base{
 		this.user = params;
 	}
 
-	readAll(params){
-		this.res = 'readAll';
+	readList(params){
+		this.res = 'readList';
 	}
 	update(params){
 		this.res = 'update';

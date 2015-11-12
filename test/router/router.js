@@ -114,7 +114,7 @@ describe('router', () => {
 			});
 
 			it('"resource" should create restful routes', async (done) => {
-				let	routes =	[ { type: 'get', path: '/users', result: {data: {res: 'readAll'}}},
+				let	routes =	[ { type: 'get', path: '/users', result: {data: {res: 'readList'}}},
 								  { type: 'get', path: '/users/1', result: {data: {user: {id: '1'}}}},
 								  { type: 'post', path: '/users', result: {data: {}}},
 								  { type: 'patch', path: '/users/1', result: {data: {res: 'update'}}},
@@ -122,7 +122,7 @@ describe('router', () => {
 								  { type: 'patch', path: '/users/1/friends/2', result: {}},
 								  { type: 'get', path: '/users/admin', result: {}},
 								  { type: 'get', path: '/users/adminFromUsers', result: {data: {}}},
-								  { type: 'get', path: '/groups', result: '<html><body>{"res":"readAll"}</body></html>'},
+								  { type: 'get', path: '/groups', result: '<html><body>{"res":"readList"}</body></html>'},
 								  { type: 'get', path: '/groups/1', result: {data: {user: {id: '1'}}, status: 200}},
 								  { type: 'post', path: '/groups', result: {data: {}, status: 200}},
 								  { type: 'patch', path: '/groups/1', result: {data: {res: 'update'}, status: 200}},

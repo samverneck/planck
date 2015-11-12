@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.3 (12 November 2015)
+* **Fix**
+ * fixed naming of http router methods
+
 ## 0.7.2 (6 November 2015)
 * **Fix**
  * fixed paths for SystemJS
