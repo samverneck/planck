@@ -8,8 +8,8 @@ class Groups extends Users{
 	}
 
 	@Controller.useViews('html-test-view')
-	readAll(params){
-		this.res = "readAll";
+	readList(params){
+		this.res = "readList";
 	}
 }
 
