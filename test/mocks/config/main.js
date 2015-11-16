@@ -11,6 +11,9 @@ const config = {
 	},
 	controllers: {
 		path: './test/mocks/controllers/'
+	},
+	bodyParser: {
+		limit: '100kb'
 	}
 };
 
