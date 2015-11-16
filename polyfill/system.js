@@ -7,7 +7,8 @@ System.config({
 	transpiler: 'babel',
 	paths: {
 		'*': 'test/mocks/*',
-		'code-generator/*': 'test/mocks/code-generator/mocks*'
+		'code-generator/*': 'test/mocks/code-generator/mocks*',
+        '*regenerator*': '*node_modules/regenerator*'
 	},
 	map: {
 		json: '../../node_modules/systemjs-plugin-json/json.js'
@@ -24,6 +25,9 @@ System.config({
 			"es3.propertyLiterals",
 			"es5.properties.mutators",
 			"es6.templateLiterals"
-		]
+		],
+        'optional': [
+            'runtime'
+        ]
 	}
 });
