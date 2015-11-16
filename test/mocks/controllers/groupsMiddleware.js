@@ -4,8 +4,9 @@ import * as Reflection from '../../../lib/reflection';
 
 @Controller.before(function(params){
 	this.before.push(2);
-}, function(params){
+}, function(req, res, next){
 	this.before.push(22);
+	next();
 }, "beforeAllHandler")
 @Controller.before("beforeAllHandlerFromParent")
 @Controller.before(123)
