@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0 (16 November 2015)
+* **New Feature**
+ * Improvements with express middleware. For now it's possible to pass express middleware directly into before/after handlers in controller.
+ * New config parameter - bodyParser.
+
 ## 0.7.3 (12 November 2015)
 * **Fix**
  * fixed naming of http router methods
