@@ -1,4 +1,4 @@
-import * as Controller from '../../../lib/controller/controller';
+import {Controller} from 'planck';
 import AppController from './app-controller';
 
 class Users extends AppController{
@@ -12,7 +12,7 @@ class Users extends AppController{
 
 	}
 	adminFromUsers(){
-		
+
 	}
 }
 

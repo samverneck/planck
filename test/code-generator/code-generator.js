@@ -8,6 +8,7 @@ const should = chai.should();
 describe('code-generator', () => {
     let app;
     let cwd;
+    let locate;
 
     before(async (done) => {
         try{
@@ -16,10 +17,27 @@ describe('code-generator', () => {
                 fs.mkdirSync(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/code-generator/mocks`);
             } catch(e) {
             }
+
             process.chdir(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/code-generator/mocks`);
+            try{
+                fs.mkdirSync('./controllers');
+            } catch(e) {
+            }
+            fs.writeFileSync('./controllers/app-controller.js', `
+                import {Controller} from 'planck';
+
+                class AppController extends Controller.Base{
+                	constructor(){
+                		super();
+                	}
+                }
+
+                export default AppController;
+            `);
             let config = await System.import(`./test/mocks/config/main`);
+            locate = System.locate;
+            config.default.codeGeneration.autoGeneration = true;
             app = await new App(config.default);
-            app.config.codeGeneration.autoGeneration = true;
             done();
         }catch(e){
             done(e);
@@ -29,12 +47,17 @@ describe('code-generator', () => {
     after(async (done) => {
         app.dbProviderPool.databases = {};
         process.chdir(cwd);
-        app.config.codeGeneration.autoGeneration = false;
+        let config = await System.import(`./test/mocks/config/main`);
+        System.locate = locate;
+        config.default.codeGeneration.autoGeneration = false;
         app.httpServer.close(() => done());
     });
 
-    describe('should create by information from router:', () => {
-        before(async(done) => {
+    describe('should create by information from router:', function() {
+        this.timeout(10000)
+
+        it('controllers', async (done) => {
+            try{
             class MyRouter extends Router.RouterHTTP{
                 constructor(resource, route){
                     super();
@@ -49,7 +72,6 @@ describe('code-generator', () => {
                             resource('likes', ['read']);
                         });
                     });
-                    resource('nonexistent');
                     route('/admin', 'admin.getInfo');
                     route('/my/password', 'users.password', ['get', 'post']);
                     route.get('/my/info', 'users.info');
@@ -64,10 +86,9 @@ describe('code-generator', () => {
             }
             await app.use(MyRouter);
             done();
-        });
-
-        it('controllers', async (done) => {
-            done();
+        }catch(e){
+            done(e)
+        }
         });
 	});
 });

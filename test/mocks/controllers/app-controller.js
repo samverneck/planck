@@ -1,4 +1,4 @@
-import * as Controller from '../../../lib/controller/controller';
+import {Controller} from 'planck';
 
 @Controller.useViews('json-wrap-view')
 class AppController extends Controller.Base{

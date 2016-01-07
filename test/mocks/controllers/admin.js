@@ -1,4 +1,4 @@
-import * as Controller from '../../../lib/controller/controller';
+import {Controller} from 'planck';
 import AppController from './app-controller';
 
 console.log(Controller, AppController)

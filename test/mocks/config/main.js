@@ -10,7 +10,11 @@ const config = {
 		autoGeneration: false
 	},
 	controllers: {
-		path: './test/mocks/controllers/'
+		path: 'controllers'
+	},
+	models: {
+		path: 'models',
+		template: '../../mocks/templates/model.js.ejs'
 	},
 	bodyParser: {
 		limit: '100kb'

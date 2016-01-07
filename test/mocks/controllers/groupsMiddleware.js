@@ -1,4 +1,4 @@
-import * as Controller from '../../../lib/controller/controller';
+import {Controller} from 'planck';
 import Users from './usersMiddleware';
 import * as Reflection from '../../../lib/reflection';
 
