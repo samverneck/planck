@@ -1,4 +1,4 @@
-import * as Controller from '../../../lib/controller/controller';
+import {Controller} from 'planck';
 
 class Posts extends Controller.Base{
 	constructor(){

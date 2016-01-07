@@ -51,6 +51,6 @@
     "mongodb": "^2.0.39",
     "path-is-absolute": "^1.0.0",
     "source-map-support": "^0.3.2",
-    "systemjs": "^0.19.5"
+    "systemjs": "0.19.5"
   }
 }

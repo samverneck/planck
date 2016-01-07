@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0 (7 January 2016)
+* **New Feature**
+ * Auto generated models. Just add import to your controller and restart server. Planck overrides default module loading pipeline and generate models if they are not exists.
+ * User generated templates for code-generators. Just provide ```template``` parameter in controller/model config with path to its ejs template.
+* **Fix**
+ * fixed wrong router pipeline - previously resolve can be called after reject.
+
 ## 0.8.0 (16 November 2015)
 * **New Feature**
  * Improvements with express middleware. For now it's possible to pass express middleware directly into before/after handlers in controller.

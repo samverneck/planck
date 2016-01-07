@@ -1,4 +1,4 @@
-import * as Controller from '../../../lib/controller/controller';
+import {Controller} from 'planck';
 
 class Friends extends Controller.Base{
 	constructor(){

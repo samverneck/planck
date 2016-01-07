@@ -8,7 +8,7 @@ System.config({
 	paths: {
 		'*': 'test/mocks/*',
 		'code-generator/*': 'test/mocks/code-generator/mocks*',
-        '*regenerator*': '*node_modules/regenerator*'
+        'planck': 'index'
 	},
 	map: {
 		json: '../../node_modules/systemjs-plugin-json/json.js'
@@ -19,15 +19,12 @@ System.config({
 		}
 	},
 	babelOptions: {
-		"stage": 0,
-		"blacklist": [
-			"es3.memberExpressionLiterals",
-			"es3.propertyLiterals",
-			"es5.properties.mutators",
-			"es6.templateLiterals"
-		],
-        'optional': [
-            'runtime'
-        ]
+		'stage': 0,
+		'blacklist': [
+			'es3.memberExpressionLiterals',
+			'es3.propertyLiterals',
+			'es5.properties.mutators',
+			'es6.templateLiterals'
+		]
 	}
 });
