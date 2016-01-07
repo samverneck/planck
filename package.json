@@ -1,6 +1,6 @@
 {
   "name": "planck",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "es6/7 oop framework",
   "main": "index.js",
   "bin": {
