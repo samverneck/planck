@@ -85,3 +85,4 @@
  * **New Feature**
   * App entry point
   * Basic active record functionality
+
