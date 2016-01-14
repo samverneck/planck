@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.1 (14 January 2016) - Fixed some bugs
+* **Fix**
+ * fixed multiple calls of the same before/after handlers
+ * fixed accident crash of controllers due to some bugs with Symbols - some symbols changed to plain non-enumerable properties
+ * fixed path resolving for default config
+
 ## 0.9.0 (7 January 2016)
 * **New Feature**
  * Auto generated models. Just add import to your controller and restart server. Planck overrides default module loading pipeline and generate models if they are not exists.
