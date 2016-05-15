@@ -5,7 +5,6 @@ coverage/
 *.log
 logs
 gulpfile.js
-.babelrc
 .travis.yml
 .gitignore
 .jshintrc
