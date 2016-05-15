@@ -1,8 +1,8 @@
-import chai from '@node/chai';
+import chai from 'chai';
 import * as Planck from '../lib/planck';
 import * as DI from '../lib/dependency-injection';
 
-import chaiSubset from '@node/chai-subset';
+import chaiSubset from 'chai-subset';
 
 chai.use(chaiSubset);
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
+require('babel-register');
+require('babel-polyfill');
 require('../polyfill/system.js');
-
-System.import('./lib/cli/index.js')
-    .then((res) => {console.log(res)})
-    .catch((res) => {console.log(res)});
+require('../lib/cli/index.js');

@@ -1,4 +1,4 @@
-import chai from '@node/chai';
+import chai from 'chai';
 import App from '../lib/app';
 
 const should = chai.should();
@@ -10,7 +10,7 @@ describe('app', () => {
 	});
 	describe('"App" class', () => {
 		it('should accept Object as constructor param with entire application params', async (done) => {
-			let config = await System.import(`.${process.env.UNDER_NODE_BABEL?'':'/build'}/test/mocks/config/main`);
+			let config = await System.loader.import(`.${process.env.UNDER_NODE_BABEL?'':'/build'}/test/mocks/config/main`);
 			const app = await new App(config.default);
 			app.should.be.instanceof(App);
 			should.exist(app.config);

@@ -1,4 +1,4 @@
-import chai from '@node/chai';
+import chai from 'chai';
 import * as namespace from '../lib/planck';
 
 const should = chai.should();

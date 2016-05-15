@@ -1,10 +1,10 @@
 import App from '../../lib/app';
-import chai from '@node/chai';
+import chai from 'chai';
 import * as ActiveRecord from '../../lib/active-record/active-record';
 import * as ActiveRecordDBProvider from '../../lib/active-record/lib/active-record-db-provider/active-record-db-provider';
 import {symbols} from '../../lib/reflection';
 import '../mocks/db';
-import {ObjectID} from '@node/mongodb';
+import {ObjectID} from 'mongodb';
 
 const should = chai.should();
 
@@ -35,7 +35,11 @@ const createClass = async function(){
 describe('active-record', () => {
 	let app;
 	before(async (done) => {
-		app = await new App(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/mocks/config/main`);
+		try{
+			app = await new App(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/mocks/config/main`);
+		}catch(e){
+			done(e);
+		}
 		done();
 	});
 

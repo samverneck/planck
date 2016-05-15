@@ -1,35 +1,37 @@
 import fs from 'fs';
 import path from 'path';
-
 import '../polyfill/system';
+import Module from 'module';
 
-describe('planck test loader', function(done) {
+//we need to alias 'planck' to '../index.js' because planck loads twice in code-generator
+const _findPath = Module._findPath;
+
+Module._findPath = function(request, paths, isMain) {
+	if (request === 'planck'){
+		request = '../index.js';
+	}
+	return _findPath.call(this, request, paths, isMain);
+};
+
+describe('planck test loader', function() {
     it('', function(done) {
         this.timeout(120000);
         let count = 0;
         let render = function(dir){
-            let files = fs.readdirSync(path.join(__dirname, dir)).filter(el => el !== 'all.js' && el.indexOf('mocks') === -1);
-
-            files.map(templatePath => {
-                if (fs.statSync(path.join(__dirname, dir, templatePath)).isDirectory()){
-                    render(path.join(dir, templatePath));
-                } else {
-                    count++;
-                    System.import(path.join(__dirname, dir, templatePath))
-                        .then(()=>{
-                            count--;
-                            if (!count){
-                                done();
-                            }
-                        }).catch(e => {
-                            count--;
-                            if (!count){
-                                done(e);
-                            }
-                        });
+            let files = fs.readdirSync(dir).filter(el => el !== 'all.js' && el.indexOf('mocks') === -1);
+            files.forEach(templatePath => {
+                if (fs.statSync(path.join(dir, templatePath)).isDirectory()){
+                    return render(path.join(dir, templatePath));
                 }
+                count++;
+                System.loader.import(path.join(dir, templatePath)).catch(e => {}).then(()=>{
+                    count--;
+                    if (!count){
+                        done();
+                    }
+                })
             });
         };
-        render('');
+        render(__dirname);
     });
 });

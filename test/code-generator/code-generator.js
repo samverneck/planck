@@ -1,5 +1,5 @@
-import chai from '@node/chai';
-import fs from '@node/fs';
+import chai from 'chai';
+import fs from 'fs';
 import App from '../../lib/app';
 import * as Router from '../../lib/router/router.js';
 
@@ -19,6 +19,7 @@ describe('code-generator', () => {
             }
 
             process.chdir(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/code-generator/mocks`);
+            console.log(process.cwd());
             try{
                 fs.mkdirSync('./controllers');
             } catch(e) {
@@ -34,7 +35,7 @@ describe('code-generator', () => {
 
                 export default AppController;
             `);
-            let config = await System.import(`./test/mocks/config/main`);
+            let config = await System.loader.import(`../../mocks/config/main`);
             locate = System.locate;
             config.default.codeGeneration.autoGeneration = true;
             app = await new App(config.default);
@@ -45,9 +46,9 @@ describe('code-generator', () => {
     });
 
     after(async (done) => {
-        app.dbProviderPool.databases = {};
         process.chdir(cwd);
-        let config = await System.import(`./test/mocks/config/main`);
+        app.dbProviderPool.databases = {};
+        let config = await System.loader.import(`./test/mocks/config/main`);
         System.locate = locate;
         config.default.codeGeneration.autoGeneration = false;
         app.httpServer.close(() => done());

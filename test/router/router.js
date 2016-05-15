@@ -1,8 +1,8 @@
-import chai from '@node/chai';
+import chai from 'chai';
 import App from '../../lib/app';
 import * as Router from '../../lib/router/router.js';
-import request from '@node/supertest';
-import chaiSubset from '@node/chai-subset';
+import request from 'supertest';
+import chaiSubset from 'chai-subset';
 
 chai.use(chaiSubset);
 const should = chai.should();

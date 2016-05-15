@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.0 (15 May 2016) - Dependecies update
+* **Internal**
+ * Updated all dependencies. Core moved to Babel 6.x + Node 6.x, SystemJS was removed.
+
 ## 0.9.1 (14 January 2016) - Fixed some bugs
 * **Fix**
  * fixed multiple calls of the same before/after handlers
@@ -85,4 +89,3 @@
  * **New Feature**
   * App entry point
   * Basic active record functionality
-
