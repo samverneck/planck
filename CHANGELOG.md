@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.1 (15 May 2016) - Dependecies update
+* **Fix**
+ * Fixed transpilling of ./bin folder - .babelrc was in .npmignore
+
 ## 0.10.0 (15 May 2016) - Dependecies update
 * **Internal**
  * Updated all dependencies. Core moved to Babel 6.x + Node 6.x, SystemJS was removed.
