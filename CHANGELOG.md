@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.0 (24 May 2016) - Middleware update
+* **New Feature**
+ * ```@before``` and ```@after``` can accept json with params for handler now. For example if you have decorator ```@authorize``` you can specify role id for each route separately
+ * ```@skipBefore``` and ```@skipAfter``` decorators can also skip plain functions now
+ * New decorator: ```@PROTECTED```. It used for hiding properties (making them non-enumerable).
+
 ## 0.10.1 (15 May 2016) - Dependecies update
 * **Fix**
  * Fixed transpilling of ./bin folder - .babelrc was in .npmignore

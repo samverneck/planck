@@ -56,4 +56,17 @@ describe('planck entry point should be namespace with all main classes and names
 		namespace.Reflection.invokeSuper.should.be.a('function');
 		namespace.Reflection.construct.should.be.a('function');
 	});
+	it('Decorators', () => {
+		should.exist(namespace.decorators);
+		should.exist(namespace.decorators.singleton);
+		should.exist(namespace.decorators.abstractMethodAsync);
+		should.exist(namespace.decorators.inject);
+		should.exist(namespace.decorators.PROTECTED);
+		should.exist(namespace.decorators.PROT);
+		namespace.decorators.singleton.should.be.a('function');
+		namespace.decorators.abstractMethodAsync.should.be.a('function');
+		namespace.decorators.inject.should.be.a('function');
+		namespace.decorators.PROTECTED.should.be.a('function');
+		namespace.decorators.PROT.should.be.a('function');
+	});
 });

@@ -2,7 +2,7 @@ import chai from 'chai';
 import App from '../lib/app';
 import * as Router from '../lib/router/router';
 import chaiSubset from 'chai-subset';
-import {inject, singleton, abstractMethodAsync} from '../lib/decorators';
+import {inject, singleton, abstractMethodAsync, PROTECTED, PROT} from '../lib/decorators';
 
 chai.use(chaiSubset);
 const should = chai.should();
@@ -106,5 +106,21 @@ describe('Decorators', () => {
 		} catch (e) {
 			done();
 		}
+	});
+
+    it('@PROTECTED should make property of class non-enumerable, to protect it from rendering to json', () => {
+		class A{
+			@PROTECTED foo = 10;
+			constructor(){
+
+			}
+		}
+		let a = new A();
+		a.foo.should.be.equal(10);
+		Object.keys(a).should.be.deep.equal([]);
+	});
+
+	it('@PROT should be an alias for PROTECTED', () => {
+		PROT.should.be.equal(PROTECTED);
 	});
 });

@@ -16,11 +16,10 @@ describe('router', () => {
 		let app;
 		let cwd;
 
-		before(async (done) => {
+		before(async () => {
 			cwd = process.cwd();
 			process.chdir(`.${process.env.UNDER_NODE_BABEL?'':'/build'}/test/mocks`);
 			app = await new App();
-			done();
 		});
 
 		after(async (done) => {
@@ -38,16 +37,15 @@ describe('router', () => {
 			}
 			(() => {new MyRouter();}).should.not.throw();
 		});
-		it('subclass can be passed to "app.use()" and created by it', async (done) => {
+		it('subclass can be passed to "app.use()" and created by it', async () => {
 			class MyRouter extends Router.RouterHTTP{
 				constructor(){
 					super();
 				}
 			}
 			app.use(MyRouter);
-			done();
 		});
-		it('constructor should have "resource" helper method', async (done) => {
+		it('constructor should have "resource" helper method', async () => {
 			class MyRouter extends Router.RouterHTTP{
 				constructor(resource){
 					super();
@@ -55,9 +53,8 @@ describe('router', () => {
 				}
 			}
 			app.use(MyRouter);
-			done();
 		});
-		it('"resource" helper method should allow nesting', async (done) => {
+		it('"resource" helper method should allow nesting', async () => {
 			class MyRouter extends Router.RouterHTTP{
 				constructor(resource){
 					super();
@@ -73,10 +70,9 @@ describe('router', () => {
 				}
 			}
 			app.use(MyRouter);
-			done();
 		});
 		describe('',() => {
-			before(async (done) => {
+			before(async () => {
 				app.dbProviderPool.databases = {};
 				app.httpServer.close();
 				app = await new App();
@@ -107,13 +103,14 @@ describe('router', () => {
 						route(); //also fail
 						route('/fail');
 						route('/fail2', 'onlyControllerName');
+						route.get('/admin/fail500route', 'admin.fail500route');
+						route.get('/admin/fail500to404route', 'admin.fail500to404route');
 					}
 				}
 				await app.use(MyRouter);
-				done();
 			});
 
-			it('"resource" should create restful routes', async (done) => {
+			it('"resource" should create restful routes', async () => {
 				let	routes =	[ { type: 'get', path: '/users', result: {data: {res: 'readList'}}},
 								  { type: 'get', path: '/users/1', result: {data: {user: {id: '1'}}}},
 								  { type: 'post', path: '/users', result: {data: {}}},
@@ -172,13 +169,9 @@ describe('router', () => {
 						});
 					}));
 				};
-				Promise.all(routesPromises).then(() => {
-					done();
-				}, (err) => {
-					done(err);
-				});
+				await Promise.all(routesPromises);
 			});
-			it('"resource" should create routes with 501 if something needed for route is not implemented', async (done) => {
+			it('"resource" should create routes with 501 if something needed for route is not implemented', async () => {
 				let	routes501 =	[ { type: 'get', path: '/groups/1/posts/2/comments/3' },
 								  { type: 'get', path: '/nonexistent' },
 								  { type: 'get', path: '/nonexistent/1' },
@@ -198,13 +191,9 @@ describe('router', () => {
 						});
 					}));
 				};
-				Promise.all(routesPromises).then(() => {
-					done();
-				}, (err) => {
-					done(err);
-				});
+				await Promise.all(routesPromises);
 			});
-			it('"resource" should return 404 for all another requests', async (done) => {
+			it('"resource" should return 404 for all another requests', async () => {
 				let	routes404 =	[ { type: 'get', path: '/users/1/friends' },
 								  { type: 'get', path: '/users/1/friends/22' },
 								  { type: 'post', path: '/users/1/friends' },
@@ -226,11 +215,37 @@ describe('router', () => {
 						});
 					}));
 				};
-				Promise.all(routesPromises).then(() => {
-					done();
-				}, (err) => {
-					done(err);
-				});
+				await Promise.all(routesPromises);
+			});
+			it('"resource" should return 500 by default, if error is thrown due request handling', async () => {
+				let	routes500 =	[ { type: 'get', path: '/admin/fail500route' }];
+				let routesPromises = [];
+				for (let i = 0; i < routes500.length; i++) {
+					routesPromises.push(new Promise((resolve, reject) => {
+						request('http://localhost:9000')[routes500[i].type](routes500[i].path).expect(500).end(function(err, res){
+							if (err) {
+								return reject(err)
+							};
+							resolve();
+						});
+					}));
+				};
+				await Promise.all(routesPromises);
+			});
+			it('"resource" should return another error code, provided by view', async () => {
+				let	routes500 =	[ { type: 'get', path: '/admin/fail500to404route' }];
+				let routesPromises = [];
+				for (let i = 0; i < routes500.length; i++) {
+					routesPromises.push(new Promise((resolve, reject) => {
+						request('http://localhost:9000')[routes500[i].type](routes500[i].path).expect(404).end(function(err, res){
+							if (err) {
+								return reject(err)
+							};
+							resolve();
+						});
+					}));
+				};
+				await Promise.all(routesPromises);
 			});
 		});
 	});

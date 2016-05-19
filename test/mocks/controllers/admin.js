@@ -12,6 +12,15 @@ class Admin extends AppController{
 	getInfo(){
 
 	}
+
+	fail500route(){
+		throw new Error();
+	}
+
+	@Controller.useViews('error-500-to-404-view')
+	fail500to404route(){
+		throw new Error();
+	}
 }
 
 export default Admin;
