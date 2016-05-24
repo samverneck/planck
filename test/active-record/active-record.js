@@ -38,7 +38,7 @@ describe('active-record', () => {
 		try{
 			app = await new App(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/mocks/config/main`);
 		}catch(e){
-			done(e);
+			return done(e);
 		}
 		done();
 	});
