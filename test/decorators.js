@@ -11,50 +11,40 @@ describe('Decorators', () => {
 	let app;
 	let cwd;
 
-	before(async (done) => {
+	before(async () => {
 		cwd = process.cwd();
 		process.chdir(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/mocks`);
 		app = await new App();
-		done();
+		await app.start();
 	});
 
-	after(async (done) => {
+	after((done) => {
 		app.dbProviderPool.databases = {};
 		process.chdir(cwd);
 		app.httpServer.close(() => done());
 	});
 
-    it('@inject should accept array of strings with dependencies names', async (done) => {
-		try{
-			@inject('route', 'rawRouter', 'resource')
-			class MyRouter extends Router.RouterHTTP{
-				constructor(){
-					super();
-				}
+    it('@inject should accept array of strings with dependencies names', async () => {
+		@inject('route', 'rawRouter', 'resource')
+		class MyRouter extends Router.RouterHTTP{
+			constructor(){
+				super();
 			}
-			await app.use(MyRouter);
-			done();
-		} catch(e) {
-			done(e);
 		}
+		await app.use(MyRouter);
 	});
 
-    it('@inject should accept string with dependency name', async (done) => {
-		try{
-			@inject('route')
-			class MyRouter extends Router.RouterHTTP{
-				constructor(){
-					super();
-				}
+    it('@inject should accept string with dependency name', async () => {
+		@inject('route')
+		class MyRouter extends Router.RouterHTTP{
+			constructor(){
+				super();
 			}
-			await app.use(MyRouter);
-			done();
-		} catch(e) {
-			done(e);
 		}
+		await app.use(MyRouter);
 	});
 
-    it('@inject should fail with another params in array', async (done) => {
+    it('@inject should fail with another params in array', async () => {
 		try{
 			@inject('route', {})
 			class MyRouter extends Router.RouterHTTP{
@@ -63,13 +53,13 @@ describe('Decorators', () => {
 				}
 			}
 			await app.use(MyRouter);
-			done(new Error("it should fail but it not"));
 		} catch(e) {
-			done();
+			return;
 		}
+		throw new Error("it should fail but it not");
 	});
 
-    it('@inject should also fail with another params instead of array', async (done) => {
+    it('@inject should also fail with another params instead of array', async () => {
 		try{
 			@inject({})
 			class MyRouter extends Router.RouterHTTP{
@@ -78,10 +68,10 @@ describe('Decorators', () => {
 				}
 			}
 			await app.use(MyRouter);
-			done(new Error("it should fail but it not"));
 		} catch(e) {
-			done();
+			return;
 		}
+		throw new Error("it should fail but it not");
 	});
 
     it('@singleton should force target class to be singleton', () => {
@@ -91,7 +81,7 @@ describe('Decorators', () => {
 		new A().should.be.equal(new A());
 	});
 
-    it('@abstractMethodAsync', async (done) => {
+    it('@abstractMethodAsync', async () => {
 		class A{
 			constructor(){
 
@@ -102,10 +92,10 @@ describe('Decorators', () => {
 		}
 		try{
 			await new A().f();
-			done(new Error);
 		} catch (e) {
-			done();
+			return;
 		}
+		throw new Error();
 	});
 
     it('@PROTECTED should make property of class non-enumerable, to protect it from rendering to json', () => {

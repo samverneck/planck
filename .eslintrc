@@ -9,12 +9,22 @@
     },
     "env": {
         "node": true,
-        "mocha": true
+        "mocha": true,
+        "es6":   true
     },
     "rules": {
         "strict": 0,
         "quotes": [2, "single", "avoid-escape"],
         "no-else-return": 2,
-        "no-underscore-dangle": 2
+        "no-underscore-dangle": 2,
+        "no-use-before-define": 2,
+        "no-undef": 2,
+        "no-unused-vars": ["error", { "vars": "all", "args": "after-used" }],
+        "no-var": 2,
+        "prefer-reflect": 2,
+        "prefer-rest-params": 2,
+        "prefer-template": 2,
+        "no-unreachable": 2,
+        "semi": ["error", "always", { "omitLastInOneLineBlock": true}]
     }
 }

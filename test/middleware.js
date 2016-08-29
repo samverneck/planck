@@ -16,9 +16,10 @@ describe('Middleware', () => {
 		cwd = process.cwd();
 		process.chdir(`.${process.env.UNDER_NODE_BABEL ? '' : '/build'}/test/mocks`);
 		app = await new App();
+		await app.start();
 	});
 
-	after(async (done) => {
+	after((done) => {
 		app.dbProviderPool.databases = {};
 		process.chdir(cwd);
 		app.httpServer.close(() => done());

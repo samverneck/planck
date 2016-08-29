@@ -1,6 +1,6 @@
 {
   "name": "planck",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "es6/7 oop framework",
   "main": "index.js",
   "bin": {
@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "export UNDER_NODE_BABEL=1; ./node_modules/babel-cli/bin/babel-node.js --es_staging node_modules/mocha/bin/_mocha ./test/all --reporter spec",
-    "test-ci": "export UNDER_NODE_BABEL=1; istanbul cover node_modules/.bin/_mocha ./test/all -- -u exports --compilers js:babel-register -R spec"
+    "test-ci": "export UNDER_NODE_BABEL=1; istanbul cover node_modules/.bin/_mocha ./test/all -- -u exports --compilers js:babel-register -R spec",
+    "documentation": "./node_modules/.bin/jsdoc . -c jsdoc.json -r -d documentation"
   },
   "repository": {
     "type": "git",
@@ -21,29 +22,34 @@
   },
   "homepage": "http://planck.github.io/",
   "devDependencies": {
-    "babel-eslint": "^6.0.4",
+    "babel-eslint": "^6.1.2",
     "chai": "^3.5.0",
     "chai-subset": "^1.2.2",
     "co-mocha": "^1.1.2",
-    "database-cleaner": "^0.13.0",
-    "eslint": "^2.10.1",
+    "database-cleaner": "^1.0.0",
+    "eslint": "^3.0.1",
     "istanbul": "^1.0.0-alpha.2",
-    "mocha": "^2.4.5",
-    "supertest": "^1.2.0"
+    "jsdoc": "^3.4.0",
+    "jsdoc-babel": "^0.2.1",
+    "mocha": "^3.0.1",
+    "supertest": "^2.0.0"
   },
   "dependencies": {
     "babel": "^6.5.2",
-    "babel-cli": "^6.8.0",
+    "babel-cli": "^6.10.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.8.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
     "babel-preset-stage-1": "^6.5.0",
-    "babel-register": "^6.8.0",
-    "body-parser": "^1.15.1",
+    "babel-register": "^6.9.0",
+    "body-parser": "^1.15.2",
+    "chalk": "^1.1.3",
     "commander": "^2.9.0",
-    "deasync": "^0.1.6",
-    "ejs": "^2.4.1",
-    "express": "^4.13.4",
-    "mongodb": "^2.1.18",
-    "source-map-support": "^0.4.0"
+    "deasync": "^0.1.7",
+    "ejs": "^2.4.2",
+    "express": "^4.14.0",
+    "fs-extra": "^0.30.0",
+    "glob": "^7.0.5",
+    "mongodb": "^2.2.1",
+    "source-map-support": "^0.4.1"
   }
 }

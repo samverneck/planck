@@ -1,0 +1,12 @@
+{
+    "source": {
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_|(node_modules)"
+    },
+    "plugins": ["node_modules/jsdoc-babel"],
+    "babel": {
+        "presets": ["stage-1"],
+        "plugins": ["babel-plugin-transform-decorators-legacy", "transform-es2015-modules-commonjs"],
+        "only": [".**", "!/node_modules/**"]
+    }
+}
