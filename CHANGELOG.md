@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.0 (29 August 2016) - Code generation update
+* **New Feature**
+ * Code generators are full configurable by users now! You can redefine system generators or create new. For now, generator is a class with configuration when and how to run and with some methods for generation. Generators can re-generate files, which was not modified by user. For example if you add new field to your model, you can automatically re-generate associated json schema. This functionality is experimental and almost dont work with VCS's now, but in future release that will be fixed.
+* **Known issues**
+ * New functionality is lack of tests =(
+
 ## 0.11.0 (24 May 2016) - Middleware update
 * **New Feature**
  * ```@before``` and ```@after``` can accept json with params for handler now. For example if you have decorator ```@authorize``` you can specify role id for each route separately
