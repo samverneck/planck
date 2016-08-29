@@ -7,14 +7,14 @@ const config = {
 		port: 9000
 	},
 	codeGeneration: {
-		autoGeneration: false
+		autoGeneration: false,
+		generators: ['native-model', 'native-controller', 'generators/*.js']
 	},
 	controllers: {
-		path: 'controllers'
+		path: 'controllers',
 	},
 	models: {
 		path: 'models',
-		template: '../../mocks/templates/model.js.ejs'
 	},
 	bodyParser: {
 		limit: '100kb'

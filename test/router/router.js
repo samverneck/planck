@@ -20,9 +20,10 @@ describe('router', () => {
 			cwd = process.cwd();
 			process.chdir(`.${process.env.UNDER_NODE_BABEL?'':'/build'}/test/mocks`);
 			app = await new App();
+			await app.start();
 		});
 
-		after(async (done) => {
+		after((done) => {
 			app.dbProviderPool.databases = {};
 			process.chdir(cwd);
 			app.httpServer.close(() => done());
@@ -76,6 +77,7 @@ describe('router', () => {
 				app.dbProviderPool.databases = {};
 				app.httpServer.close();
 				app = await new App();
+				await app.start();
 
 				class MyRouter extends Router.RouterHTTP{
 					constructor(resource, route){
@@ -149,7 +151,6 @@ describe('router', () => {
 					routesPromises.push(new Promise((resolve, reject) => {
 						request('http://localhost:9000')[routes[i].type](routes[i].path).expect(200).end(function(err, res){
 							if (err) {
-								console.error("__",err, routes[i].type,routes[i].path);
 								return reject(err, new Error(routes[i].path))
 							};
 							let isJson = false;
