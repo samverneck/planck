@@ -35,12 +35,14 @@ describe('code-generator', () => {
         await app.start();
     });
 
-    after((done) => {
+    after(async () => {
         let config = await System.loader.import(`../../mocks/config/main`);
         process.chdir(cwd);
         app.dbProviderPool.databases = {};
         config.default.codeGeneration.autoGeneration = false;
-        app.httpServer.close(() => done());
+		return new Promise((resolve, reject) => {
+			app.httpServer.close(() => resolve());
+		})
     });
 
     describe('should create by information from router:', function() {
