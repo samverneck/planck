@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.2 (30 August 2016) - Fixed some bugs
+* **Fix**
+ * Fixed wrong detection if file was manualy modified by user
+
 ## 0.12.0 (29 August 2016) - Code generation update
 * **New Feature**
  * Code generators are full configurable by users now! You can redefine system generators or create new. For now, generator is a class with configuration when and how to run and with some methods for generation. Generators can re-generate files, which was not modified by user. For example if you add new field to your model, you can automatically re-generate associated json schema. This functionality is experimental and almost dont work with VCS's now, but in future release that will be fixed.
